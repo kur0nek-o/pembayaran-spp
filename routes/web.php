@@ -22,5 +22,5 @@ Route::get('/logout', [LoginController::class, 'logout']);
 Route::post('/', [LoginController::class, '_validateRequest']);
 
 Route::get('/dashboard', function() {
-    return view('template.main', ['title' => 'TEST']);
+    return view('menu.dashboard', ['title' => 'Dashboard']);
 })->middleware('auth');
