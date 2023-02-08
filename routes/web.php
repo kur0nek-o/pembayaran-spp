@@ -19,8 +19,8 @@ use App\Http\Controllers\PetugasController;
 Route::get('/', function () {
     return view('index');
 })->name('login')->middleware('guest');
-Route::get('/logout', [LoginController::class, 'logout']);
 
+Route::get('/logout', [LoginController::class, 'logout']);
 Route::post('/', [LoginController::class, '_validateRequest']);
 
 /* ---------------- Application Route ---------------- */

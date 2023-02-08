@@ -1,29 +1,50 @@
-<nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
-    <div class="position-sticky pt-3 sidebar-sticky">
-        <ul class="nav flex-column">
-            <li class="nav-item">
-                <a class="nav-link {{ isset($active) && $active == 'dashboard' ? 'active' : '' }}" aria-current="page" href="/dashboard">
-                    <span data-feather="home" class="align-text-bottom"></span>
-                    Dashboard
-                </a>
-            </li>
-        </ul>
+<!-- ======= Sidebar ======= -->
+<aside id="sidebar" class="sidebar">
 
-        <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted text-uppercase">
-            <span>Data Management</span>
-                
-            <a class="link-secondary" href="#" aria-label="Add a new report">
-                <span data-feather="database" class="align-text-bottom"></span>
+    <ul class="sidebar-nav" id="sidebar-nav">
+
+        <li class="nav-item">
+            <a class="nav-link {{ isset($active) && $active == 'dashboard' ? '' : 'collapsed'  }}" href="/dashboard">
+            <i class="bi bi-grid"></i>
+            <span>Dashboard</span>
             </a>
-        </h6>
+        </li><!-- End Dashboard Nav -->
 
-        <ul class="nav flex-column mb-2">
-            <li class="nav-item">
-                <a class="nav-link {{ isset($active) && $active == 'petugas' ? 'active' : '' }}" aria-current="page" href="/petugas">
-                    <span data-feather="user-plus" class="align-text-bottom"></span>
-                    Petugas
-                </a>
-            </li>
-        </ul>
-    </div>
-</nav>
+        {{-- <li class="nav-item">
+            <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
+            <i class="bi bi-journal-text"></i><span>Forms</span><i class="bi bi-chevron-down ms-auto"></i>
+            </a>
+            <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                <li>
+                    <a href="forms-elements.html">
+                    <i class="bi bi-circle"></i><span>Form Elements</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="forms-layouts.html">
+                    <i class="bi bi-circle"></i><span>Form Layouts</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="forms-editors.html">
+                    <i class="bi bi-circle"></i><span>Form Editors</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="forms-validation.html">
+                    <i class="bi bi-circle"></i><span>Form Validation</span>
+                    </a>
+                </li>
+            </ul>
+        </li><!-- End Forms Nav --> --}}
+
+        <li class="nav-heading">Data Management</li>
+
+        <li class="nav-item">
+            <a class="nav-link {{ isset($active) && $active == 'petugas' ? '' : 'collapsed'  }}" href="/petugas">
+            <i class="bi bi-person-plus"></i>
+            <span>Petugas</span>
+            </a>
+        </li><!-- End Dashboard Nav -->
+    </ul>
+</aside><!-- End Sidebar-->
