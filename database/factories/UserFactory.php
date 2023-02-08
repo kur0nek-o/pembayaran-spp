@@ -16,7 +16,8 @@ class UserFactory extends Factory
     {
         return [
             'username'  => 'kuro',
-            'password'  => bcrypt('bagus')
+            'password'  => bcrypt('bagus'),
+            'level'     => 'admin' 
         ];
     }
 

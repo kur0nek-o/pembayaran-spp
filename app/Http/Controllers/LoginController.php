@@ -9,12 +9,14 @@ class LoginController extends Controller {
     public function _validateRequest( Request $request ) {
         $credentials = $request->validate(
             [
-                'username'  => 'required',
-                'password'  => 'required'
+                'username'  => 'required|max:25',
+                'password'  => 'required|max:25'
             ],
             [
                 'username.required' => 'Username tidak boleh kosong',
-                'password.required' => 'Password tidak boleh kosong'
+                'username.max'      => 'Username tidak boleh lebih dari 25 karakter',
+                'password.required' => 'Password tidak boleh kosong',
+                'password.max'      => 'Password tidak boleh lebih dari 25 karakter'
             ]
         );
 

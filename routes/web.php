@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\PetugasController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +15,7 @@ use App\Http\Controllers\LoginController;
 |
 */
 
+/* ------------- Auth Route ------------- */
 Route::get('/', function () {
     return view('index');
 })->name('login')->middleware('guest');
@@ -21,6 +23,12 @@ Route::get('/logout', [LoginController::class, 'logout']);
 
 Route::post('/', [LoginController::class, '_validateRequest']);
 
+/* ---------------- Application Route ---------------- */
 Route::get('/dashboard', function() {
-    return view('menu.dashboard', ['title' => 'Dashboard']);
+    return view('menu.dashboard', [
+        'title'     => 'Dashboard',
+        'active'    => 'dashboard'
+    ]);
 })->middleware('auth');
+
+Route::resource('/petugas', PetugasController::class)->middleware('auth');

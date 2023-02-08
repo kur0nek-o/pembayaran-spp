@@ -28,7 +28,7 @@
                         id="username" 
                         name="username" 
                         placeholder="Username"
-                        maxlength="50"
+                        maxlength="25"
                         oninvalid="this.setCustomValidity( 'Username tidak boleh kosong' )"
                         oninput="this.setCustomValidity( '' )" 
                         required
@@ -51,7 +51,7 @@
                         id="password" 
                         name="password" 
                         placeholder="Password"
-                        maxlength="50"
+                        maxlength="25"
                         oninvalid="this.setCustomValidity( 'Password tidak boleh kosong' )"
                         oninput="this.setCustomValidity( '' )" 
                         required
