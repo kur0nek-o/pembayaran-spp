@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Petugas;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class PetugasController extends Controller
 {
@@ -39,7 +41,34 @@ class PetugasController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate(
+            [
+                'nama_petugas' => 'required',
+                'username'     => 'required|min:8|max:25|unique:users',
+                'password'     => 'required'
+            ],
+            [
+                'nama_petugas.required' => 'Nama petugas harus di isi',
+                'username.required'     => 'Username harus di isi',
+                'username.min'          => 'Username tidak boleh kurang dari 8 karakter',
+                'username.max'          => 'Username tidak boleh lebih dari 25 karakter',
+                'username.unique'       => 'Username sudah dipakai',
+                'password.required'     => 'Password petugas harus di isi'
+            ]
+        );
+
+        $validated['password'] = Hash::make( $validated['password'] );
+
+        $data = collect($validated);
+        $user = User::create( $data->except('nama_petugas')->toArray() );
+
+        $data['user_id'] = $user->id;
+        Petugas::create( $data->only(['user_id', 'nama_petugas'])->toArray() );
+        
+        return response()->json([
+            'status' => true,
+            'msg'    => 'Petugas berhasil di tambahkan'
+        ]);
     }
 
     /**
