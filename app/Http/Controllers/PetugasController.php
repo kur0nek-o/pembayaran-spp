@@ -44,16 +44,18 @@ class PetugasController extends Controller
         $validated = $request->validate(
             [
                 'nama_petugas' => 'required',
-                'username'     => 'required|min:8|max:25|unique:users',
-                'password'     => 'required'
+                'username'     => 'required|min:4|max:25|unique:users',
+                'password'     => 'required',
+                'level'        => 'required'
             ],
             [
                 'nama_petugas.required' => 'Nama petugas harus di isi',
                 'username.required'     => 'Username harus di isi',
-                'username.min'          => 'Username tidak boleh kurang dari 8 karakter',
+                'username.min'          => 'Username tidak boleh kurang dari 4 karakter',
                 'username.max'          => 'Username tidak boleh lebih dari 25 karakter',
                 'username.unique'       => 'Username sudah dipakai',
-                'password.required'     => 'Password petugas harus di isi'
+                'password.required'     => 'Password petugas harus di isi',
+                'level.required'        => 'Pilih level petugas'
             ]
         );
 

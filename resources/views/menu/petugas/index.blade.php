@@ -10,22 +10,31 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
 
-        <form id="form" autocomplete="off">
+        <form id="form" autocomplete="off" onsubmit="return save()">
             <div class="modal-body">
                 <div class="mb-3">
-                    <label for="nama-petugas" class="form-label">Nama Petugas</label>
-                    <input type="text" class="form-control @error( 'nama_petugas' ) is-invalid @enderror" id="nama-petugas" name="nama_petugas" placeholder="Masukan nama petugas">
+                    <label for="nama_petugas" class="form-label">Nama Petugas <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control @error( 'nama_petugas' ) is-invalid @enderror" id="nama_petugas" name="nama_petugas" placeholder="Masukan nama petugas">
                 </div>
                 <div class="mb-3">
-                    <label for="username" class="form-label">Username</label>
+                    <label for="username" class="form-label">Username <span class="text-danger">*</span></label>
                     <input type="text" class="form-control" id="username" name="username" placeholder="Masukan username">
                     <div class="form-text">
-                        Username harus 8-25 karakter.
+                        Username harus 4-25 karakter.
                     </div>
                 </div>
-                <div class="mb-0">
-                    <label for="password" class="form-label">Password</label>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Password <span class="text-danger">*</span></label>
                     <input type="password" class="form-control" id="password" name="password" placeholder="Masukan password">
+                </div>
+                
+                <div class="mb-0">
+                    <label for="level" class="form-label">Level Petugas <span class="text-danger">*</span></label>
+                    <select class="form-select" name="level" id="level">
+                        <option value="">Pilih level</option>
+                        <option value="admin">Admin</option>
+                        <option value="petugas">Petugas</option>
+                    </select>
                 </div>
             </div>
             <div class="modal-footer">
@@ -55,7 +64,7 @@
         <div class="col">
             <div class="card p-3">
                 <div class="card-body p-0">
-                    <button type="button" id="add" class="btn btn-sm btn-primary mb-3">Tambah Petugas</button>
+                    <button type="button" onclick="openModal( 'Tambah petugas' )" class="btn btn-sm btn-primary mb-3">Tambah Petugas</button>
 
                     <div class="table-responsive">
                         <table class="table table-bordered border-dark text-center mb-0">
@@ -85,70 +94,5 @@
     </div>
 </section>
 
-<script>
-    const addBtn    = $( '#add' );
-    const _modal    = $( '#modal' );
-    const _form     = $( '#form' )[0];
-    const saveBTN   = $( '#saveBtn' );
-
-    $( 'input[type="text"], input[type="password"]' ).each( function(){
-        $(this).on( 'click', function(){
-            $(this).removeClass( 'is-invalid' );
-            
-            if (! $(this).next().hasClass( 'form-text' ) ) {
-                $(this).next().remove();
-            }
-        }); 
-    });
-
-    addBtn.on('click', function() {
-        _modal.find( '.modal-title' ).text( 'Tambah Petugas' );
-        _modal.modal( 'show' );
-        _form.reset();
-    });
-
-    saveBTN.on( 'click', function(e) {
-        e.preventDefault();
-        const formData  = new FormData( _form );
-
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-
-        $.ajax({
-            url     : '{{ url( "/petugas" ) }}',
-            method  : 'POST',
-            data    : formData,
-            cache   : false,
-            processData : false,
-            contentType : false,
-            success     : function( data ) {
-                if ( data.status ) {
-                    alert( data.msg );
-                }
-            },
-            error: function( data ) {
-                const errors = data.responseJSON.errors;
-                displayTheErrors( errors );
-            }
-        });
-
-        function displayTheErrors( errors ) {
-            $.each( errors, function( key, message ) {
-                const el = $( `input[name='${key}']` );
-                const errorMessage = createErrorFeedback( message );
-
-                el.addClass( 'is-invalid' );
-                $( errorMessage ).insertAfter( el );
-            });
-        }
-
-        function createErrorFeedback( errorMessage ) {
-            const message = `<div class="invalid-feedback">${errorMessage}</div>`;
-            return message;
-        }
-    });
-</script>
+@include( 'template.system.crud' );
 @endsection
