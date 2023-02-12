@@ -65,28 +65,9 @@
             <div class="card p-3">
                 <div class="card-body p-0">
                     <button type="button" onclick="openModal( 'Tambah petugas' )" class="btn btn-sm btn-primary mb-3">Tambah Petugas</button>
-
-                    <div class="table-responsive">
-                        <table class="table table-bordered border-dark text-center mb-0">
-                            <thead style="background: yellow">
-                                <tr class="text-nowrap">
-                                    <th scope="col">No</th>
-                                    <th scope="col">Nama petugas</th>
-                                    <th scope="col">Username</th>
-                                    <th scope="col">Aksi</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach( $petugas as $p )
-                                    <tr>
-                                        <th>{{ $loop->iteration }}</th>
-                                        <td>{{ $p->nama_petugas }}</td>
-                                        <td>{{ $p->user->username }}</td>
-                                        <td>tidak ada</td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
+                    
+                    <div id="table_data">
+                        @include( 'menu.petugas.table' )
                     </div>
                 </div>
             </div>
@@ -94,5 +75,6 @@
     </div>
 </section>
 
-@include( 'template.system.crud' );
+@include( 'template.system.filter&pagination' )
+@include( 'template.system.crud' )
 @endsection

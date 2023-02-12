@@ -15,4 +15,8 @@ class Petugas extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function scope_Join() {
+        return User::join('petugas', 'users.id', '=', 'petugas.user_id')->select('users.*', 'petugas.nama_petugas');
+    }
 }
