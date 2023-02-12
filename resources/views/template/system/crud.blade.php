@@ -54,6 +54,12 @@
     }
 
     function save( __form = _form ) {
+        Swal.fire({
+            text: "Sedang memproses data",
+            customClass: 'swal-wide'
+        });
+        Swal.showLoading();
+
         const formData  = new FormData( __form );
     
         $.ajaxSetup({
@@ -71,13 +77,14 @@
             contentType : false,
             success     : function( data ) {
                 if ( data.status ) {
-                    alert( data.msg );
+                    Swal.fire( '', `${data.msg}`, 'success' );
                     _modal.modal( 'hide' );
                 }
             },
             error: function( data ) {
                 const errors = data.responseJSON.errors;
                 displayTheErrors( errors );
+                Swal.close();
             }
         });
 
