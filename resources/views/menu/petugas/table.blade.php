@@ -19,7 +19,7 @@
                         <td>{{ ucfirst($p->level) }}</td>
                         <td>
                             <button class="btn bg-warning btn-sm" type="button" onclick="_edit( {{ $p->id_petugas }} )"><i class="bi bi-pencil-square"></i></button>
-                            <button class="btn btn-danger btn-sm" type="button" onclick="_delete( {{ $p->id_petugas }} )"><i class="bi bi-x-circle"></i></button>
+                            <button class="btn btn-danger btn-sm" type="button" onclick="_delete( {{ $p->id_petugas }}, 'Kamu akan menghapus data petugas!' )"><i class="bi bi-x-circle"></i></button>
                         </td>
                     </tr>
                 @endforeach

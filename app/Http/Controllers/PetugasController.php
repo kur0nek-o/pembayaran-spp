@@ -143,8 +143,16 @@ class PetugasController extends Controller
      * @param  \App\Models\Petugas  $petugas
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Petugas $petugas)
+    public function destroy(Petugas $petuga)
     {
-        //
+        $id_petugas = $petuga->id_petugas;
+
+        User::where( 'id', $petuga->user->id )->delete();
+        Petugas::where( 'id_petugas', $id_petugas )->delete();
+
+        return response()->json([
+            'status' => true,
+            'msg'    => 'Data petugas berhasil dihapus'
+        ]);
     }
 }

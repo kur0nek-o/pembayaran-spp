@@ -95,4 +95,34 @@
 
         return false;
     }
+
+    function _delete( id, msg ) {
+        Swal.fire({
+            title   : 'Apa kamu yakin?',
+            text    : msg,
+            icon    : 'warning',
+            showCancelButton    : true,
+            confirmButtonColor  : '#3085d6',
+            cancelButtonColor   : '#d33',
+            cancelButtonText    : 'Batal',
+            confirmButtonText   : 'Ya!'
+        }).then((result) => {
+            if ( result.isConfirmed ) {
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                
+                $.ajax({
+                    url     : `/petugas/${id}`,
+                    method  : 'DELETE',
+                    success : function( data ) {
+                        Swal.fire( '', `${data.msg}`, 'success' );
+                        _load(0);
+                    }
+                });
+            }
+        })
+    }
 </script>
