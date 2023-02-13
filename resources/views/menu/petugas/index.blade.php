@@ -64,8 +64,13 @@
         <div class="col">
             <div class="card p-3">
                 <div class="card-body p-0">
-                    <button type="button" onclick="openModal( 'Tambah petugas' )" class="btn btn-sm btn-primary mb-3">Tambah Petugas</button>
-                    
+                    <div class="row">
+                        <div class="col"><button type="button" onclick="openModal( 'Tambah petugas' )" class="btn btn-sm btn-primary mb-3">Tambah Petugas</button></div>
+                        <div class="col">
+                            <input autofocus type="search" name="keyword" class="form-control form-control-sm" id="search" placeholder="Cari petugas...">
+                        </div>
+                    </div>
+
                     <div id="table_data">
                         @include( 'menu.petugas.table' )
                     </div>
@@ -75,6 +80,5 @@
     </div>
 </section>
 
-@include( 'template.system.filter&pagination' )
 @include( 'template.system.crud' )
 @endsection

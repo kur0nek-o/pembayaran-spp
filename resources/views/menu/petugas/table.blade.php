@@ -5,22 +5,30 @@
                 <th scope="col">No</th>
                 <th scope="col">Nama petugas</th>
                 <th scope="col">Username</th>
+                <th scope="col">Level</th>
                 <th scope="col">Aksi</th>
             </tr>
         </thead>
-        <tbody>
-            @foreach( $petugas as $p )
+        <tbody id="table-body">
+            @if( $petugas->isNotEmpty() )
+                @foreach( $petugas as $p )
+                    <tr>
+                        <th>{{ $index++ }}</th>
+                        <td>{{ $p->nama_petugas }}</td>
+                        <td>{{ $p->username }}</td>
+                        <td>{{ ucfirst($p->level) }}</td>
+                        <td>tidak ada</td>
+                    </tr>
+                @endforeach
+            @else
                 <tr>
-                    <th>{{ 'none' }}</th>
-                    <td>{{ $p->nama_petugas }}</td>
-                    <td>{{ $p->username }}</td>
-                    <td>tidak ada</td>
+                    <td colspan="5">Data petugas tidak ditemukan</td>
                 </tr>
-            @endforeach
-            {{-- <tr>
-                <td colspan="4">halo</td>
-            </tr> --}}
+            @endif
         </tbody>
+        <tr class="buffer">
+            <td colspan="5"><img width="50" src="/img/buffer.gif" alt="buffering"></td>
+        </tr>
     </table>
 </div>
 

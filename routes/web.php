@@ -3,8 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PetugasController;
-use Illuminate\Http\Request;
-use App\Models\Petugas;
+use App\Http\Controllers\LoadController;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,10 +33,4 @@ Route::get('/dashboard', function() {
 })->middleware('auth');
 
 Route::resource('/petugas', PetugasController::class)->middleware('auth');
-
-Route::get('/load', function( Request $request ) {
-    if ( $request->ajax() ) {
-        $petugas = Petugas::_Join()->latest()->paginate(3);
-        return view('menu.petugas.table', compact('petugas'))->render();
-    }
-})->middleware('auth');
+Route::get('/load', [LoadController::class, '_load'])->middleware('auth');

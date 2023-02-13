@@ -16,12 +16,13 @@ class PetugasController extends Controller
      */
     public function index()
     {
-        $petugas = Petugas::_Join()->latest();
+        $petugas = Petugas::_Join()->latest()->paginate(5);
 
         return view( 'menu.petugas.index', [
             'title'     => 'Petugas',
             'active'    => 'petugas',
-            'petugas'   => $petugas->paginate(3)
+            'petugas'   => $petugas,
+            'index'     => $petugas->firstItem()
         ]);
     }
 

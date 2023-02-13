@@ -1,3 +1,5 @@
+@include( 'template.system.filter&pagination' )
+
 <script>
     // default env setting
     const _modal    = $( '#modal' );
@@ -79,6 +81,7 @@
                 if ( data.status ) {
                     Swal.fire( '', `${data.msg}`, 'success' );
                     _modal.modal( 'hide' );
+                    _load(0);
                 }
             },
             error: function( data ) {
