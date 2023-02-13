@@ -3,7 +3,7 @@
 <script>
     // default env setting
     const _modal    = $( '#modal' );
-    const _form     = $( '#form' )[0];
+    const _form     = $( '#form' );
     const saveBTN   = $( '#saveBtn' );
 
     // default form input behavior
@@ -21,10 +21,14 @@
     }
 
     function setFormToDefault() {
-        _form.reset();
+        _form[0].reset();
 
         $( 'input[type="text"], input[type="password"], select' ).each( function(){
             removeErrorMessage( this );
+        });
+
+        $( '.required-info' ).each( function() {
+            $(this).show();
         });
     }
 
@@ -62,8 +66,9 @@
         });
         Swal.showLoading();
 
-        const formData  = new FormData( __form );
-    
+        const id        = $( 'input[name="id"]' ).val();
+        const formData  = __form.serialize();
+
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -71,12 +76,9 @@
         });
     
         $.ajax({
-            url     : '{{ url( "/petugas" ) }}',
-            method  : 'POST',
+            url     : ( id == '' ) ? '/petugas' : `/petugas/${id}`,
+            type    : ( id == '' ) ? 'POST' : `PUT`,
             data    : formData,
-            cache   : false,
-            processData : false,
-            contentType : false,
             success     : function( data ) {
                 if ( data.status ) {
                     Swal.fire( '', `${data.msg}`, 'success' );

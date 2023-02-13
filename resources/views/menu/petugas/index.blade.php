@@ -12,6 +12,8 @@
 
         <form id="form" autocomplete="off" onsubmit="return save()">
             <div class="modal-body">
+                <input type="text" class="d-none" name="id" >
+                <input type="text" class="d-none" name="id_user" >
                 <div class="mb-3">
                     <label for="nama_petugas" class="form-label">Nama Petugas <span class="text-danger">*</span></label>
                     <input type="text" class="form-control @error( 'nama_petugas' ) is-invalid @enderror" id="nama_petugas" name="nama_petugas" placeholder="Masukan nama petugas">
@@ -24,7 +26,7 @@
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="password" class="form-label">Password <span class="text-danger">*</span></label>
+                    <label for="password" class="form-label">Password <span class="text-danger required-info">*</span></label>
                     <input type="password" class="form-control" id="password" name="password" placeholder="Masukan password">
                 </div>
                 
@@ -65,8 +67,8 @@
             <div class="card p-3">
                 <div class="card-body p-0">
                     <div class="row">
-                        <div class="col"><button type="button" onclick="openModal( 'Tambah petugas' )" class="btn btn-sm btn-primary mb-3">Tambah Petugas</button></div>
-                        <div class="col">
+                        <div class="col-sm-6"><button type="button" onclick="openModal( 'Tambah petugas' )" class="btn btn-sm btn-primary mb-3">Tambah Petugas</button></div>
+                        <div class="col-sm-6 mb-sm-0 mb-3">
                             <input autofocus type="search" name="keyword" class="form-control form-control-sm" id="search" placeholder="Cari petugas...">
                         </div>
                     </div>
@@ -79,6 +81,45 @@
         </div>
     </div>
 </section>
+
+<script>
+    function _edit( id, __form = _form ) {
+        Swal.fire({
+            text: "Sedang memproses data",
+            customClass: 'swal-wide'
+        });
+        Swal.showLoading();
+        
+        __form[0].reset();
+
+        $.ajax({
+            url     : `/petugas/${id}`,
+            method  : 'GET',
+            success : function( data ) {
+                const user = data.user;
+
+                $( 'input[name="id"]' ).val( data.id_petugas );
+                $( 'input[name="id_user"]' ).val( user.id );
+                $( 'input[name="nama_petugas"]' ).val( data.nama_petugas );
+                $( 'input[name="username"]' ).val( user.username );
+
+                $( '#level' ).val( user.level ).change();
+
+                _modal.find( '.modal-title' ).text( 'Edit data petugas' );
+                
+                $( '.required-info' ).each( function() {
+                    $(this).hide();
+                });
+
+                Swal.close();
+                _modal.modal( 'show' );
+            },
+            error: function( jqXHR, textStatus, errorThrown ) {
+                swal( "Gagal", "Gagal Mendapatkan data", "error" );
+            }
+        });
+    }
+</script>
 
 @include( 'template.system.crud' )
 @endsection

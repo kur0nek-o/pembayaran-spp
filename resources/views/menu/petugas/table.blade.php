@@ -17,7 +17,10 @@
                         <td>{{ $p->nama_petugas }}</td>
                         <td>{{ $p->username }}</td>
                         <td>{{ ucfirst($p->level) }}</td>
-                        <td>tidak ada</td>
+                        <td>
+                            <button class="btn bg-warning btn-sm" type="button" onclick="_edit( {{ $p->id_petugas }} )"><i class="bi bi-pencil-square"></i></button>
+                            <button class="btn btn-danger btn-sm" type="button" onclick="_delete( {{ $p->id_petugas }} )"><i class="bi bi-x-circle"></i></button>
+                        </td>
                     </tr>
                 @endforeach
             @else

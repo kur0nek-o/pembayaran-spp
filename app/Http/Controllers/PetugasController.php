@@ -82,9 +82,9 @@ class PetugasController extends Controller
      * @param  \App\Models\Petugas  $petugas
      * @return \Illuminate\Http\Response
      */
-    public function show(Petugas $petugas)
+    public function show(Petugas $petuga)
     {
-        //
+        return response()->json($petuga);    
     }
 
     /**
@@ -107,7 +107,34 @@ class PetugasController extends Controller
      */
     public function update(Request $request, Petugas $petugas)
     {
-        //
+        $validated = $request->validate(
+            [
+                'nama_petugas' => 'required',
+                'username'     => 'required|min:4|max:25|unique:users',
+                'level'        => 'required'
+            ],
+            [
+                'nama_petugas.required' => 'Nama petugas harus di isi',
+                'username.required'     => 'Username harus di isi',
+                'username.min'          => 'Username tidak boleh kurang dari 4 karakter',
+                'username.max'          => 'Username tidak boleh lebih dari 25 karakter',
+                'username.unique'       => 'Username sudah dipakai',
+                'level.required'        => 'Pilih level petugas'
+            ]
+        );
+
+        if ( $request->password != null ) {
+            $validated['password'] = Hash::make( $request->password );
+        }
+        $data = collect($validated);
+        
+        User::where('id', $request->id_user)->update( $data->except('nama_petugas')->toArray() );
+        $petugas::where('id_petugas', $request->id)->update( $data->only(['user_id', 'nama_petugas'])->toArray() );
+        
+        return response()->json([
+            'status' => true,
+            'msg'    => 'Data petugas berhasil diperbaharui'
+        ]);
     }
 
     /**

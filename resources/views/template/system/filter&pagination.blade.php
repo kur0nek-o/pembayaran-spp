@@ -29,6 +29,9 @@
                 setStyleToPaginations();
                 $( '.buffer' ).hide();
                 $( '#table-body' ).show();
+            },
+            error: function( jqXHR, textStatus, errorThrown ) {
+                swal( "Gagal", "Gagal Mendapatkan data", "error" );
             }
         });
     }

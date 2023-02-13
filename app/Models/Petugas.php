@@ -16,7 +16,11 @@ class Petugas extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function getRouteKeyName() {
+        return 'id_petugas';
+    }
+
     public function scope_Join() {
-        return User::join('petugas', 'users.id', '=', 'petugas.user_id')->select('users.*', 'petugas.nama_petugas');
+        return User::join('petugas', 'users.id', '=', 'petugas.user_id')->select('users.*', 'petugas.id_petugas', 'petugas.nama_petugas');
     }
 }

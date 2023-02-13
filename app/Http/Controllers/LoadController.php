@@ -12,7 +12,8 @@ class LoadController extends Controller
             $petugas = Petugas::_Join();
             
             if ( $request->keyword != null ) {
-                $petugas = $petugas->where( 'nama_petugas', 'like', '%' . $request->keyword . '%' );
+                $petugas = $petugas->where( 'nama_petugas', 'like', '%' . $request->keyword . '%' )
+                        ->orWhere( 'username', 'like', '%' . $request->keyword . '%' );
             }
 
             $petugas = $petugas->latest()->paginate(5);
