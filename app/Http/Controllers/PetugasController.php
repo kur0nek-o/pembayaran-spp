@@ -9,11 +9,6 @@ use Illuminate\Support\Facades\Hash;
 
 class PetugasController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         $petugas = Petugas::_Join()->latest()->paginate(5);
@@ -26,22 +21,28 @@ class PetugasController extends Controller
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function _load( Request $request ) {
+        if ( $request->ajax() ) {
+            $petugas = Petugas::_Join();
+            
+            if ( $request->keyword != null ) {
+                $petugas = $petugas->where( 'nama_petugas', 'like', '%' . $request->keyword . '%' )
+                        ->orWhere( 'username', 'like', '%' . $request->keyword . '%' );
+            }
+
+            $petugas = $petugas->latest()->paginate(5);
+            return view('menu.petugas.table', [
+                'petugas' => $petugas,
+                'index'   => $petugas->firstItem()
+            ])->render();
+        }
+    }
+
     public function create()
     {
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $validated = $request->validate(
@@ -76,52 +77,39 @@ class PetugasController extends Controller
         ]);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Petugas  $petugas
-     * @return \Illuminate\Http\Response
-     */
     public function show(Petugas $petuga)
-    {
-        return response()->json($petuga);    
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Petugas  $petugas
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Petugas $petugas)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Petugas  $petugas
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Petugas $petugas)
+    public function edit(Petugas $petuga)
     {
-        $validated = $request->validate(
-            [
-                'nama_petugas' => 'required',
-                'username'     => 'required|min:4|max:25|unique:users',
-                'level'        => 'required'
-            ],
-            [
-                'nama_petugas.required' => 'Nama petugas harus di isi',
-                'username.required'     => 'Username harus di isi',
-                'username.min'          => 'Username tidak boleh kurang dari 4 karakter',
-                'username.max'          => 'Username tidak boleh lebih dari 25 karakter',
-                'username.unique'       => 'Username sudah dipakai',
-                'level.required'        => 'Pilih level petugas'
-            ]
-        );
+        return response()->json($petuga);
+    }
+
+    public function update(Request $request, Petugas $petuga)
+    {
+        $validationRules = [
+            'nama_petugas' => 'required',
+            'level'        => 'required'
+        ];
+
+        $validationMsg = [
+            'nama_petugas.required' => 'Nama petugas harus di isi',
+            'username.required'     => 'Username harus di isi',
+            'username.min'          => 'Username tidak boleh kurang dari 4 karakter',
+            'username.max'          => 'Username tidak boleh lebih dari 25 karakter',
+            'level.required'        => 'Pilih level petugas'
+        ];
+
+        if ( $request->username == $petuga->user->username ) {
+            $validationRules['username'] = 'required|min:4|max:25';
+        } else {
+            $validationRules['username'] = 'required|min:4|max:25|unique:users';
+            $validationMsg['username.unique'] = 'Username sudah dipakai';
+        }
+
+        $validated = $request->validate($validationRules, $validationMsg);
 
         if ( $request->password != null ) {
             $validated['password'] = Hash::make( $request->password );
@@ -129,7 +117,7 @@ class PetugasController extends Controller
         $data = collect($validated);
         
         User::where('id', $request->id_user)->update( $data->except('nama_petugas')->toArray() );
-        $petugas::where('id_petugas', $request->id)->update( $data->only(['user_id', 'nama_petugas'])->toArray() );
+        $petuga::where('id_petugas', $request->id)->update( $data->only(['user_id', 'nama_petugas'])->toArray() );
         
         return response()->json([
             'status' => true,
@@ -137,12 +125,6 @@ class PetugasController extends Controller
         ]);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Petugas  $petugas
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Petugas $petuga)
     {
         $id_petugas = $petuga->id_petugas;

@@ -10,7 +10,7 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
 
-        <form id="form" autocomplete="off" onsubmit="return save()">
+        <form id="form" autocomplete="off" onsubmit="return save( 'petugas' )">
             <div class="modal-body">
                 <input type="text" class="d-none" name="id" >
                 <input type="text" class="d-none" name="id_user" >
@@ -83,17 +83,17 @@
 </section>
 
 <script>
-    function _edit( id, __form = _form ) {
+    function _edit( id ) {
         Swal.fire({
             text: "Sedang memproses data",
             customClass: 'swal-wide'
         });
         Swal.showLoading();
         
-        __form[0].reset();
+        setFormToDefault();
 
         $.ajax({
-            url     : `/petugas/${id}`,
+            url     : `/petugas/${id}/edit`,
             method  : 'GET',
             success : function( data ) {
                 const user = data.user;

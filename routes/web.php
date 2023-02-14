@@ -33,4 +33,4 @@ Route::get('/dashboard', function() {
 })->middleware('auth');
 
 Route::resource('/petugas', PetugasController::class)->middleware('auth');
-Route::get('/load', [LoadController::class, '_load'])->middleware('auth');
+Route::post('/loadPetugas', [PetugasController::class, '_load'])->middleware('auth');

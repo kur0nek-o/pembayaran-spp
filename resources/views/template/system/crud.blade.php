@@ -14,10 +14,14 @@
     });
 
     // standard function pack for modal and crud
-    function openModal( title, __modal = _modal ) {
-        __modal.find( '.modal-title' ).text( title );
+    function openModal( title ) {
+        _modal.find( '.modal-title' ).text( title );
         setFormToDefault();
-        __modal.modal( 'show' );
+
+        $( '.required-info' ).each( function() {
+            $(this).show();
+        });
+        _modal.modal( 'show' );
     }
 
     function setFormToDefault() {
@@ -25,10 +29,6 @@
 
         $( 'input[type="text"], input[type="password"], select' ).each( function(){
             removeErrorMessage( this );
-        });
-
-        $( '.required-info' ).each( function() {
-            $(this).show();
         });
     }
 
@@ -59,7 +59,7 @@
         return message;
     }
 
-    function save( __form = _form ) {
+    function save( urlResourceName ) {
         Swal.fire({
             text: "Sedang memproses data",
             customClass: 'swal-wide'
@@ -67,7 +67,7 @@
         Swal.showLoading();
 
         const id        = $( 'input[name="id"]' ).val();
-        const formData  = __form.serialize();
+        const formData  = _form.serialize();
 
         $.ajaxSetup({
             headers: {
@@ -76,14 +76,14 @@
         });
     
         $.ajax({
-            url     : ( id == '' ) ? '/petugas' : `/petugas/${id}`,
+            url     : ( id == '' ) ? `/${urlResourceName}` : `/${urlResourceName}/${id}`,
             type    : ( id == '' ) ? 'POST' : `PUT`,
             data    : formData,
             success     : function( data ) {
                 if ( data.status ) {
                     Swal.fire( '', `${data.msg}`, 'success' );
                     _modal.modal( 'hide' );
-                    _load(0);
+                    _load( 0, resourceURL );
                 }
             },
             error: function( data ) {
@@ -96,7 +96,7 @@
         return false;
     }
 
-    function _delete( id, msg ) {
+    function _delete( id, msg, urlResourceName ) {
         Swal.fire({
             title   : 'Apa kamu yakin?',
             text    : msg,
@@ -115,11 +115,18 @@
                 });
                 
                 $.ajax({
-                    url     : `/petugas/${id}`,
+                    url     : `/${urlResourceName}/${id}`,
                     method  : 'DELETE',
                     success : function( data ) {
-                        Swal.fire( '', `${data.msg}`, 'success' );
-                        _load(0);
+                        switch( data.status ) {
+                            case true:
+                                Swal.fire( '', `${data.msg}`, 'success' );
+                                break;
+                            case false:
+                                Swal.fire( '', `${data.msg}`, 'error' );
+                                break;
+                        }
+                        _load( 0, resourceURL );
                     }
                 });
             }
