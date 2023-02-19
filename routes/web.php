@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PetugasController;
-use App\Http\Controllers\LoadController;
+use App\Http\Controllers\KelasController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,7 +26,7 @@ Route::post('/', [LoginController::class, '_validateRequest']);
 
 /* ---------------- Application Route ---------------- */
 Route::get('/dashboard', function() {
-    return view('menu.dashboard', [
+    return view('dashboard.index', [
         'title'     => 'Dashboard',
         'active'    => 'dashboard'
     ]);
@@ -34,3 +34,6 @@ Route::get('/dashboard', function() {
 
 Route::resource('/petugas', PetugasController::class)->middleware('auth');
 Route::post('/loadPetugas', [PetugasController::class, '_load'])->middleware('auth');
+
+Route::resource('/kelas', KelasController::class)->middleware('auth');
+Route::post('/loadKelas', [KelasController::class, '_load'])->middleware('auth');

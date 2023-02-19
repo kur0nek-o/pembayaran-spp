@@ -13,7 +13,7 @@ class PetugasController extends Controller
     {
         $petugas = Petugas::_Join()->latest()->paginate(5);
 
-        return view( 'menu.petugas.index', [
+        return view( 'dashboard.petugas.index', [
             'title'     => 'Petugas',
             'active'    => 'petugas',
             'petugas'   => $petugas,
@@ -31,7 +31,7 @@ class PetugasController extends Controller
             }
 
             $petugas = $petugas->latest()->paginate(5);
-            return view('menu.petugas.table', [
+            return view('dashboard.petugas.table', [
                 'petugas' => $petugas,
                 'index'   => $petugas->firstItem()
             ])->render();

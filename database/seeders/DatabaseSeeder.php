@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use App\Models\User;
+use App\Models\Petugas;
 
 class DatabaseSeeder extends Seeder
 {
@@ -14,6 +15,15 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        User::factory(1)->create();
+        User::create([
+            'username'  => 'kuro',
+            'password'  => bcrypt('bagus'),
+            'level'     => 'admin' 
+        ]);
+
+        Petugas::create([
+            'user_id'       => 1,
+            'nama_petugas'  => 'Bagus Maulana H'
+        ]);
     }
 }

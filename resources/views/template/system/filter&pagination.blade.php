@@ -1,6 +1,4 @@
 <script>
-    const resourceURL = 'loadPetugas';
-
     $(document).ready(function(){
         $(document).on( 'click', '.pagination a', function(e) {
             e.preventDefault();

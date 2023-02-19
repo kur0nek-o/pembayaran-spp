@@ -11,15 +11,15 @@
         </thead>
         <tbody id="table-body">
             @if( $petugas->isNotEmpty() )
-                @foreach( $petugas as $p )
+                @foreach( $petugas as $list )
                     <tr>
                         <th>{{ $index++ }}</th>
-                        <td>{{ $p->nama_petugas }}</td>
-                        <td>{{ $p->username }}</td>
-                        <td>{{ ucfirst($p->level) }}</td>
+                        <td>{{ $list->nama_petugas }}</td>
+                        <td>{{ $list->username }}</td>
+                        <td>{{ ucfirst($list->level) }}</td>
                         <td>
-                            <button class="btn bg-warning btn-sm" type="button" onclick="_edit( {{ $p->id_petugas }} )"><i class="bi bi-pencil-square"></i></button>
-                            <button class="btn btn-danger btn-sm" type="button" onclick="_delete( {{ $p->id_petugas }}, 'Kamu akan menghapus data petugas!', 'petugas' )"><i class="bi bi-x-circle"></i></button>
+                            <button class="btn btn-warning btn-sm" type="button" onclick="_edit( {{ $list->id_petugas }} )"><i class="bi bi-pencil-square"></i></button>
+                            <button class="btn btn-danger btn-sm" type="button" onclick="_delete( {{ $list->id_petugas }}, 'Kamu akan menghapus data petugas!', 'petugas' )"><i class="bi bi-x-circle"></i></button>
                         </td>
                     </tr>
                 @endforeach
