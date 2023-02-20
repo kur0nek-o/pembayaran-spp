@@ -11,29 +11,29 @@ class PetugasController extends Controller
 {
     public function index()
     {
-        $petugas = Petugas::_Join()->latest()->paginate(5);
+        $data = Petugas::_Join()->latest()->paginate(5);
 
         return view( 'dashboard.petugas.index', [
             'title'     => 'Petugas',
             'active'    => 'petugas',
-            'petugas'   => $petugas,
-            'index'     => $petugas->firstItem()
+            'petugas'   => $data,
+            'index'     => $data->firstItem()
         ]);
     }
 
     public function _load( Request $request ) {
         if ( $request->ajax() ) {
-            $petugas = Petugas::_Join();
+            $data = Petugas::_Join();
             
             if ( $request->keyword != null ) {
-                $petugas = $petugas->where( 'nama_petugas', 'like', '%' . $request->keyword . '%' )
+                $data = $data->where( 'nama_petugas', 'like', '%' . $request->keyword . '%' )
                         ->orWhere( 'username', 'like', '%' . $request->keyword . '%' );
             }
 
-            $petugas = $petugas->latest()->paginate(5);
+            $data = $data->latest()->paginate(5);
             return view('dashboard.petugas.table', [
-                'petugas' => $petugas,
-                'index'   => $petugas->firstItem()
+                'petugas' => $data,
+                'index'   => $data->firstItem()
             ])->render();
         }
     }

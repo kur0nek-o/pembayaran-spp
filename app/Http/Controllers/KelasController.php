@@ -9,30 +9,30 @@ class KelasController extends Controller
 {
     public function index()
     {
-        $kelas = Kelas::latest()->paginate(5);
+        $data = Kelas::latest()->paginate(5);
 
         return view( 'dashboard.manajemen_siswa.kelas.index', [
             'title'  => 'Kelas',
             'active' => 'manajemen-siswa',
             'sub'    => 'kelas',
-            'kelas'  => $kelas,
-            'index'  => $kelas->firstItem()
+            'kelas'  => $data,
+            'index'  => $data->firstItem()
         ]);
     }
 
     public function _load( Request $request ) {
         if ( $request->ajax() ) {
-            $kelas = Kelas::latest();
+            $data = Kelas::latest();
             
             if ( $request->keyword != null ) {
-                $kelas = $kelas->where( 'nama_kelas', 'like', '%' . $request->keyword . '%' )
+                $data = $data->where( 'nama_kelas', 'like', '%' . $request->keyword . '%' )
                         ->orWhere( 'kompetensi_keahlian', 'like', '%' . $request->keyword . '%' );
             }
 
-            $kelas = $kelas->paginate(5);
+            $data = $data->paginate(5);
             return view('dashboard.manajemen_siswa.kelas.table', [
-                'kelas' => $kelas,
-                'index' => $kelas->firstItem()
+                'kelas' => $data,
+                'index' => $data->firstItem()
             ])->render();
         }
     }

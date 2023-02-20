@@ -5,8 +5,8 @@
 
         <li class="nav-item">
             <a class="nav-link {{ isset($active) && $active == 'dashboard' ? '' : 'collapsed'  }}" href="/dashboard">
-            <i class="bi bi-grid"></i>
-            <span>Dashboard</span>
+                <i class="bi bi-grid"></i>
+                <span>Dashboard</span>
             </a>
         </li><!-- End Dashboard Nav -->
 
@@ -14,14 +14,14 @@
 
         <li class="nav-item">
             <a class="nav-link {{ isset($active) && $active == 'petugas' ? '' : 'collapsed'  }}" href="/petugas">
-            <i class="bi bi-person-plus"></i>
-            <span>Petugas</span>
+                <i class="bi bi-person-plus"></i>
+                <span>Petugas</span>
             </a>
         </li>
 
         <li class="nav-item">
             <a class="nav-link {{ isset($active) && $active == 'manajemen-siswa' ? '' : 'collapsed'  }}" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
-            <i class="bi bi-people"></i><span>Manajemen Siswa</span><i class="bi bi-chevron-down ms-auto"></i>
+                <i class="bi bi-people"></i><span>Manajemen Siswa</span><i class="bi bi-chevron-down ms-auto"></i>
             </a>
             <ul id="forms-nav" class="nav-content collapse {{ isset($active) && $active == 'manajemen-siswa' ? 'show' : ''  }}" data-bs-parent="#sidebar-nav">
                 <li>
@@ -29,7 +29,19 @@
                         <i class="bi bi-circle"></i><span>Kelas</span>
                     </a>
                 </li>
+                <li>
+                    <a href="/siswa" class="{{ isset($sub) && $sub == 'siswa' ? 'active' : ''  }}">
+                        <i class="bi bi-circle"></i><span>Siswa</span>
+                    </a>
+                </li>
             </ul>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link {{ isset($active) && $active == 'spp' ? '' : 'collapsed'  }}" href="/spp">
+                <i class="bi bi-receipt"></i>
+                <span>SPP</span>
+            </a>
         </li>
     </ul>
 </aside><!-- End Sidebar-->

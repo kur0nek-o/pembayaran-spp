@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PetugasController;
 use App\Http\Controllers\KelasController;
+use App\Http\Controllers\SppController;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,3 +38,6 @@ Route::post('/loadPetugas', [PetugasController::class, '_load'])->middleware('au
 
 Route::resource('/kelas', KelasController::class)->middleware('auth');
 Route::post('/loadKelas', [KelasController::class, '_load'])->middleware('auth');
+
+Route::resource('/spp', SppController::class)->middleware('auth');
+Route::post('/loadSpp', [SppController::class, '_load'])->middleware('auth');
