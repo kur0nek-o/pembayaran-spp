@@ -18,7 +18,7 @@
                         <td>{{ $list->nisn }}</td>
                         <td>{{ $list->nis }}</td>
                         <td>{{ $list->nama }}</td>
-                        <td>{{ $list->kelas_id }}</td>
+                        <td>{{ $list->nama_kelas }}</td>
                         <td>
                             <button class="btn btn-warning btn-sm" type="button" onclick="_edit( {{ $list->id }} )"><i class="bi bi-pencil-square"></i></button>
                             <button class="btn btn-danger btn-sm" type="button" onclick="_delete( {{ $list->id }}, 'Kamu akan menghapus data siswa!', 'siswa' )"><i class="bi bi-x-circle"></i></button>
@@ -27,7 +27,7 @@
                 @endforeach
             @else
                 <tr>
-                    <td colspan="5">Data siswa tidak ditemukan</td>
+                    <td colspan="6">Data siswa tidak ditemukan</td>
                 </tr>
             @endif
         </tbody>

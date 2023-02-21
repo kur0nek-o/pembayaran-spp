@@ -37,7 +37,7 @@
 </section>
 
 <script>
-    const resourceURL = 'loadKelas';
+    const resourceURL = 'loadSiswa';
 
     function _edit( id ) {
         Swal.fire({

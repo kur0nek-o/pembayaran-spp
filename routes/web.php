@@ -44,3 +44,4 @@ Route::resource('/spp', SppController::class)->middleware('auth');
 Route::post('/loadSpp', [SppController::class, '_load'])->middleware('auth');
 
 Route::resource('/siswa', SiswaController::class);
+Route::post('/loadSiswa', [SiswaController::class, '_load'])->middleware('auth');

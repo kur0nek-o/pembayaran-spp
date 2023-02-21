@@ -11,7 +11,7 @@ class SiswaController extends Controller
 {
     public function index()
     {
-        $data = Siswa::latest()->paginate(5);
+        $data = Siswa::_join()->latest()->paginate(5);
 
         return view( 'dashboard.manajemen_siswa.siswa.index', [
             'title'  => 'Siswa',
@@ -20,6 +20,25 @@ class SiswaController extends Controller
             'siswa'  => $data,
             'index'  => $data->firstItem()
         ]);
+    }
+
+    public function _load(Request $request) {
+        if ( $request->ajax() ) {
+            $data = Siswa::_join();
+            
+            if ( $request->keyword != null ) {
+                $data = $data->where( 'nisn', 'like', '%' . $request->keyword . '%' )
+                        ->orWhere( 'nis', 'like', '%' . $request->keyword . '%' )
+                        ->orWhere( 'nama', 'like', '%' . $request->keyword . '%' )
+                        ->orWhere( 'nama_kelas', 'like', '%' . $request->keyword . '%' );
+            }
+
+            $data = $data->latest()->paginate(5);
+            return view('dashboard.manajemen_siswa.siswa.table', [
+                'siswa' => $data,
+                'index' => $data->firstItem()
+            ])->render();
+        }
     }
 
     public function create()
@@ -108,6 +127,10 @@ class SiswaController extends Controller
      */
     public function destroy(Siswa $siswa)
     {
-        //
+        $siswa->delete();
+        return response()->json([
+            'status' => true,
+            'msg'    => 'Data siswa berhasil dihapus'
+        ]);
     }
 }
