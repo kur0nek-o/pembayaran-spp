@@ -20,7 +20,7 @@
                         <td>{{ $list->nama }}</td>
                         <td>{{ $list->nama_kelas }}</td>
                         <td>
-                            <button class="btn btn-warning btn-sm" type="button" onclick="_edit( {{ $list->id }} )"><i class="bi bi-pencil-square"></i></button>
+                            <a class="btn btn-warning btn-sm" href="/siswa/{{ $list->id }}/edit"><i class="bi bi-pencil-square"></i></a>
                             <button class="btn btn-danger btn-sm" type="button" onclick="_delete( {{ $list->id }}, 'Kamu akan menghapus data siswa!', 'siswa' )"><i class="bi bi-x-circle"></i></button>
                         </td>
                     </tr>

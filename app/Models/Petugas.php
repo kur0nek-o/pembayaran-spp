@@ -9,7 +9,6 @@ class Petugas extends Model
 {
     use HasFactory;
     protected $guarded  = ['id_petugas'];
-    protected $with     = ['user'];
 
     public function user()
     {

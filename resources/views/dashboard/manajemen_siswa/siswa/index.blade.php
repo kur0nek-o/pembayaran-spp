@@ -2,6 +2,8 @@
 
 @section( 'main' )
 <!---------------- Main Section ---------------->
+<div name="msg_storage" data-message="{{ session()->get('successMessage') }}" ></div>
+
 <div class="pagetitle">
     <h1>Siswa</h1>
 
@@ -38,6 +40,13 @@
 
 <script>
     const resourceURL = 'loadSiswa';
+    const theMessage  = $( 'div[name="msg_storage"]' ).data( 'message' );
+
+    $(document).ready(function() {
+        if ( theMessage ) {
+            Swal.fire('', `${theMessage}`, 'success');
+        }
+    });
 
     function _edit( id ) {
         Swal.fire({
@@ -66,7 +75,7 @@
                 _modal.modal( 'show' );
             },
             error: function( jqXHR, textStatus, errorThrown ) {
-                swal( "Gagal", "Gagal Mendapatkan data", "error" );
+                Swal.fire( "Gagal", "Gagal Mendapatkan data", "error" );
             }
         });
     }
