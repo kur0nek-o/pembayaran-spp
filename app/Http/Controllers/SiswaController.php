@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Siswa;
 use App\Models\Kelas;
 use App\Models\Spp;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class SiswaController extends Controller
 {
@@ -81,6 +83,15 @@ class SiswaController extends Controller
             ]
         );
 
+        $userData = [
+            'username' => $validated['nisn'],
+            'password' => Hash::make($validated['nis']),
+            'level'    => 'siswa' 
+        ];
+
+        $user = User::create($userData);
+        $validated['user_id'] = $user->id;
+
         Siswa::create($validated);
         return redirect('/siswa')->with( 'successMessage', 'Siswa berhasil di tambahkan' );
     }
@@ -131,22 +142,25 @@ class SiswaController extends Controller
             'alamat.required'   => 'Alamat harus di isi'
         ];
 
-        if ( $request->nisn == $siswa->nisn ) {
-            $rules['nisn']  = 'required|size:10';
-            $rules['nis']   = 'required|size:8';
-        } else {
-            $rules['nisn']  = 'required|size:10|unique:siswas';
-            $rules['nis']   = 'required|size:8|unique:siswas';
-        }
-
+        $rules['nisn'] = ( $request->nisn == $siswa->nisn ) ? 'required|size:10' : 'required|size:10|unique:siswas'; 
+        $rules['nis']  = ( $request->nis == $siswa->nis ) ? 'required|size:8' : 'required|size:8|unique:siswas';
         $validated = $request->validate($rules, $msg);
-        
+
+        if ( $request->nisn != $siswa->nisn || $request->nis != $siswa->nis ) {
+            $userData = [
+                'username' => $request->nisn,
+                'password' => Hash::make($request->nis)
+            ];
+
+            User::where('id', $siswa->user_id)->update($userData);
+        }
         $siswa->fill($validated)->save();
         return redirect('/siswa')->with( 'successMessage', 'Data siswa berhasil diperbaharui' );
     }
 
     public function destroy(Siswa $siswa)
     {
+        User::where('id', $siswa->user_id)->delete();
         $siswa->delete();
         return response()->json([
             'status' => true,
