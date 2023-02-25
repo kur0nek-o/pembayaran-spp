@@ -33,4 +33,4 @@
     </table>
 </div>
 
-{!! $kelas->links() !!} 
+{{ $kelas->onEachSide(1)->links() }} 

@@ -37,6 +37,10 @@ class KelasController extends Controller
         }
     }
 
+    public function _getItems() {
+        return response()->json(Kelas::all());
+    }
+
     public function create()
     {
         //

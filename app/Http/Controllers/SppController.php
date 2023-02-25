@@ -36,6 +36,16 @@ class SppController extends Controller
         }
     }
 
+    public function _getItems() {
+        $data = Spp::all();
+
+        foreach ($data as $item) {
+            $item->nominal = convert_to_rupiah($item->nominal);
+        }
+
+        return response()->json($data);
+    }
+
     public function create()
     {
         //

@@ -38,7 +38,7 @@
                                     name="nama"
                                     placeholder="Masukan nama siswa"
                                     maxlength="35"
-                                    value="{{ $siswa->nama }}"
+                                    value="{{ old('nama', $siswa->nama) }}"
                                 />
                                 <label for="nama">Nama siswa</label>
 
@@ -61,7 +61,7 @@
                                     name="nisn"
                                     placeholder="Masukan NISN"
                                     maxlength="10"
-                                    value="{{ $siswa->nisn }}"
+                                    value="{{ old('nisn', $siswa->nisn) }}"
                                 />
                                 <label for="nisn">Masukan NISN</label>
 
@@ -84,7 +84,7 @@
                                     name="nis"
                                     placeholder="Masukan NIS"
                                     maxlength="8"
-                                    value="{{ $siswa->nis }}"
+                                    value="{{ old('nis', $siswa->nis) }}"
                                 />
                                 <label for="nis">Masukan NIS</label>
 
@@ -99,35 +99,35 @@
                             </div>
                         </div>
                         <div class="col-md-3">
-                            <div class="col-md-12">
-                                <div class="form-floating">
-                                    <select
-                                        class="form-select @error('kelas_id') is-invalid @enderror"
-                                        id="kelas_id"
-                                        name="kelas_id"
-                                    >
-                                        <option value="">Pilih</option>
+                            <div class="form-floating mb-2">
+                                <select
+                                    class="form-select @error('kelas_id') is-invalid @enderror"
+                                    id="kelas_id"
+                                    name="kelas_id"
+                                >
+                                    <option value="">Pilih</option>
                                         
-                                        @foreach( $kelas as $list )
-                                            @if( $list->id_kelas == $siswa->kelas_id )
-                                                <option value="{{ $list->id_kelas }}" selected>{{ $list->nama_kelas }}</option>
-                                            @else
-                                                <option value="{{ $list->id_kelas }}">{{ $list->nama_kelas }}</option>
-                                            @endif
-                                        @endforeach
-                                    </select>
-                                    <label for="kelas_id">Pilih kelas siswa</label>
+                                    @foreach( $kelas as $list )
+                                        @if( old('kelas_id', $siswa->kelas_id) == $list->id_kelas )
+                                            <option value="{{ $list->id_kelas }}" selected>{{ $list->nama_kelas }}</option>
+                                        @else
+                                            <option value="{{ $list->id_kelas }}">{{ $list->nama_kelas }}</option>
+                                        @endif
+                                    @endforeach
+                                </select>
+                                <label for="kelas_id">Pilih kelas siswa</label>
 
-                                    @error('kelas_id')
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
-                                        </div>
-                                    @enderror
-                                </div>
+                                @error('kelas_id')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
                             </div>
+
+                            <button type="button" onclick="openModal('modal-kelas', 'Tambah kelas', 'form-kelas')" class="btn btn-secondary btn-sm">Tambah kelas</button>
                         </div>
                         <div class="col-md-4">
-                            <div class="form-floating">
+                            <div class="form-floating mb-2">
                                 <select
                                     class="form-select @error('spp_id') is-invalid @enderror"
                                     id="spp_id"
@@ -136,7 +136,7 @@
                                     <option value="">Pilih</option>
 
                                     @foreach( $spp as $list )
-                                        @if( $list->id_spp == $siswa->spp_id )
+                                        @if( old('spp_id', $siswa->spp_id) == $list->id_spp )
                                             <option value="{{ $list->id_spp }}" selected>{{ "Spp tahun $list->tahun | " . convert_to_rupiah($list->nominal) }}</option>
                                         @else
                                             <option value="{{ $list->id_spp }}">{{ "Spp tahun $list->tahun | " . convert_to_rupiah($list->nominal) }}</option>
@@ -151,6 +151,8 @@
                                     </div>
                                 @enderror
                             </div>
+
+                            <button type="button" onclick="openModal('modal-spp', 'Tambah SPP', 'form-spp')" class="btn btn-secondary btn-sm">Tambah SPP</button>
                         </div>
                         <div class="col-md-5">
                             <div class="form-floating">
@@ -161,7 +163,7 @@
                                     name="no_telp"
                                     placeholder="Masukan nomor telpon siswa"
                                     maxlength="13"
-                                    value="{{ $siswa->no_telp }}"
+                                    value="{{ old('no_telp', $siswa->no_telp) }}"
                                 />
                                 <label for="nis">Nomor telpon siswa</label>
 
@@ -183,7 +185,7 @@
                                     id="alamat"
                                     name="alamat"
                                     style="height: 100px"
-                                >{{ $siswa->alamat }}</textarea
+                                >{{ old('alamat', $siswa->alamat) }}</textarea
                                 ><label for="alamat">Alamat siswa</label>
 
                                 @error( 'alamat' )
@@ -203,16 +205,5 @@
     </div>
 </section>
 
-<script>
-    $( 'input[type="text"], input[type="password"], select, textarea' ).each( function(){
-        $(this).on( 'click', function(){
-            removeErrorMessage(this);
-        }); 
-    });
-
-    function removeErrorMessage( el ) {
-        $(el).removeClass( 'is-invalid' );
-        $(el).parent().find('.invalid-feedback').remove();
-    }
-</script>
+@include('template.system.sub-feature.siswa.shortcut')
 @endsection

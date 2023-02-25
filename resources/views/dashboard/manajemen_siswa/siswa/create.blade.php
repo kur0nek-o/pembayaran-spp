@@ -10,7 +10,7 @@
             <li class="breadcrumb-item"><a href="/dashboard">Beranda</a></li>
             <li class="breadcrumb-item">Data Management</li>
             <li class="breadcrumb-item">Manajemen Siswa</li>
-            <li class="breadcrumb-item">Siswa</li>
+            <li id="testo" class="breadcrumb-item">Siswa</li>
         </ol>
     </nav>
 </div><!-- End Page Title -->
@@ -38,6 +38,7 @@
                                     placeholder="Masukan nama siswa"
                                     maxlength="35"
                                     value="{{ old('nama') }}"
+                                    autofocus
                                 />
                                 <label for="nama">Nama siswa</label>
 
@@ -98,35 +99,35 @@
                             </div>
                         </div>
                         <div class="col-md-3">
-                            <div class="col-md-12">
-                                <div class="form-floating">
-                                    <select
-                                        class="form-select @error('kelas_id') is-invalid @enderror"
-                                        id="kelas_id"
-                                        name="kelas_id"
-                                    >
-                                        <option value="">Pilih</option>
+                            <div class="form-floating mb-2">
+                                <select
+                                    class="form-select @error('kelas_id') is-invalid @enderror"
+                                    id="kelas_id"
+                                    name="kelas_id"
+                                >
+                                    <option value="">Pilih</option>
                                         
-                                        @foreach( $kelas as $list )
-                                            @if( old( 'kelas_id' ) == $list->id_kelas )
-                                                <option value="{{ $list->id_kelas }}" selected>{{ $list->nama_kelas }}</option>
-                                            @else
-                                                <option value="{{ $list->id_kelas }}">{{ $list->nama_kelas }}</option>
-                                            @endif
-                                        @endforeach
-                                    </select>
-                                    <label for="kelas_id">Pilih kelas siswa</label>
+                                    @foreach( $kelas as $list )
+                                        @if( old( 'kelas_id' ) == $list->id_kelas )
+                                            <option value="{{ $list->id_kelas }}" selected>{{ $list->nama_kelas }}</option>
+                                        @else
+                                            <option value="{{ $list->id_kelas }}">{{ $list->nama_kelas }}</option>
+                                        @endif
+                                    @endforeach
+                                </select>
+                                <label for="kelas_id">Pilih kelas siswa</label>
 
-                                    @error('kelas_id')
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
-                                        </div>
-                                    @enderror
-                                </div>
+                                @error('kelas_id')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
                             </div>
+
+                            <button type="button" onclick="openModal('modal-kelas', 'Tambah kelas', 'form-kelas')" class="btn btn-secondary btn-sm">Tambah kelas</button>
                         </div>
                         <div class="col-md-4">
-                            <div class="form-floating">
+                            <div class="form-floating mb-2">
                                 <select
                                     class="form-select @error('spp_id') is-invalid @enderror"
                                     id="spp_id"
@@ -150,6 +151,8 @@
                                     </div>
                                 @enderror
                             </div>
+
+                            <button type="button" onclick="openModal('modal-spp', 'Tambah SPP', 'form-spp')" class="btn btn-secondary btn-sm">Tambah SPP</button>
                         </div>
                         <div class="col-md-5">
                             <div class="form-floating">
@@ -202,16 +205,5 @@
     </div>
 </section>
 
-<script>
-    $( 'input[type="text"], input[type="password"], select, textarea' ).each( function(){
-        $(this).on( 'click', function(){
-            removeErrorMessage(this);
-        }); 
-    });
-
-    function removeErrorMessage( el ) {
-        $(el).removeClass( 'is-invalid' );
-        $(el).parent().find('.invalid-feedback').remove();
-    }
-</script>
+@include('template.system.sub-feature.siswa.shortcut')
 @endsection

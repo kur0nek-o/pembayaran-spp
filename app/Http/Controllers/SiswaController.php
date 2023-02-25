@@ -82,7 +82,7 @@ class SiswaController extends Controller
         );
 
         Siswa::create($validated);
-        return redirect('/siswa')->with( 'msg', 'Siswa berhasil di tambahkan' );
+        return redirect('/siswa')->with( 'successMessage', 'Siswa berhasil di tambahkan' );
     }
 
     public function show(Siswa $siswa)

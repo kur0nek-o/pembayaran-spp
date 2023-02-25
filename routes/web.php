@@ -39,9 +39,11 @@ Route::post('/loadPetugas', [PetugasController::class, '_load'])->middleware('au
 
 Route::resource('/kelas', KelasController::class)->middleware('auth');
 Route::post('/loadKelas', [KelasController::class, '_load'])->middleware('auth');
+Route::get('/getKelasList', [KelasController::class, '_getItems'])->middleware('auth');
 
 Route::resource('/spp', SppController::class)->middleware('auth');
 Route::post('/loadSpp', [SppController::class, '_load'])->middleware('auth');
+Route::get('/getSppList', [SppController::class, '_getItems'])->middleware('auth');
 
 Route::resource('/siswa', SiswaController::class);
 Route::post('/loadSiswa', [SiswaController::class, '_load'])->middleware('auth');

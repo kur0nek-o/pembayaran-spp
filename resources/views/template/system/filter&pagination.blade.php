@@ -11,7 +11,7 @@
     $( '.buffer' ).hide();
     setStyleToPaginations();
 
-    $( '#search' ).on( 'search', function() {
+    $( '#search' ).on( 'keyup', function() {
         _load( 0, resourceURL );
     });
 
@@ -37,7 +37,7 @@
                 $( '#table-body' ).show();
             },
             error: function( jqXHR, textStatus, errorThrown ) {
-                swal( "Gagal", "Gagal Mendapatkan data", "error" );
+                Swal.fire( "Gagal", "Gagal Mendapatkan data", "error" );
             }
         });
     }

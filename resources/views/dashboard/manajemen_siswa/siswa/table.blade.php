@@ -32,7 +32,7 @@
             @endif
         </tbody>
         <tr class="buffer">
-            <td colspan="5"><img width="50" src="/img/buffer.gif" alt="buffering"></td>
+            <td colspan="6"><img width="50" src="/img/buffer.gif" alt="buffering"></td>
         </tr>
     </table>
 </div>
