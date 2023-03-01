@@ -6,6 +6,8 @@ use App\Http\Controllers\KelasController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\SiswaController;
 use App\Http\Controllers\PetugasController;
+use App\Http\Controllers\PembayaranController;
+use App\Http\Controllers\HistoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -47,3 +49,11 @@ Route::get('/getSppList', [SppController::class, '_getItems'])->middleware('auth
 
 Route::resource('/siswa', SiswaController::class);
 Route::post('/loadSiswa', [SiswaController::class, '_load'])->middleware('auth');
+
+Route::get('/pembayaran', [PembayaranController::class, 'index']);
+Route::post('/loadPembayaran', [PembayaranController::class, '_load'])->middleware('auth');
+Route::get('/transaksi-pembayaran/{siswa}', [PembayaranController::class, 'create'])->middleware('auth');
+Route::post('/transaksi-pembayaran', [PembayaranController::class, 'store'])->middleware('auth');
+
+Route::get('/cetak-kwitansi/{pembayaran:id_pembayaran}', [HistoryController::class, 'cetakKwitansi'])->middleware('auth');
+Route::get('/preview-kwitansi/{pembayaran:id_pembayaran}', [HistoryController::class, 'previewKwitansi'])->middleware('auth');

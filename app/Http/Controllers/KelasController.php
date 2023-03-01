@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Kelas;
+use App\Models\Siswa;
 use Illuminate\Http\Request;
 
 class KelasController extends Controller
@@ -111,6 +112,14 @@ class KelasController extends Controller
 
     public function destroy(Kelas $kela)
     {
+        $isActive = Siswa::where('kelas_id', $kela->id_kelas)->get();
+        if ($isActive->count()) {
+            return response()->json([
+                'status' => false,
+                'msg'    => "Data kelas aktif dan sedang digunakan"
+            ]);
+        }
+
         Kelas::where( 'id_kelas', $kela->id_kelas )->delete();
         return response()->json([
             'status' => true,

@@ -80,11 +80,17 @@
             type    : ( id == '' ) ? 'POST' : `PUT`,
             data    : formData,
             success     : function( data ) {
-                if ( data.status ) {
-                    Swal.fire( '', `${data.msg}`, 'success' );
-                    _modal.modal( 'hide' );
-                    _load( 0, resourceURL );
+                switch( data.status ) {
+                    case true:
+                        Swal.fire( '', `${data.msg}`, 'success' );
+                        break;
+                    case false:
+                        Swal.fire( '', `${data.msg}`, 'error' );
+                        break;
                 }
+
+                _modal.modal( 'hide' );
+                _load( 0, resourceURL );
             },
             error: function( data ) {
                 const errors = data.responseJSON.errors;

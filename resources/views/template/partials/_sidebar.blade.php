@@ -43,5 +43,14 @@
                 <span>SPP</span>
             </a>
         </li>
+
+        <li class="nav-heading">History & Pembayaran</li>
+
+        <li class="nav-item">
+            <a class="nav-link {{ isset($active) && $active == 'transaksi_pembayaran' ? '' : 'collapsed'  }}" href="/pembayaran">
+                <i class="bi bi-cash"></i>
+                <span>Transaksi Pembayaran</span>
+            </a>
+        </li>
     </ul>
 </aside><!-- End Sidebar-->

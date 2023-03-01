@@ -11,8 +11,10 @@
     $( '.buffer' ).hide();
     setStyleToPaginations();
 
-    $( '#search' ).on( 'keyup', function() {
-        _load( 0, resourceURL );
+    $( '#search' ).on( 'keypress', function(e) {
+        if(e.which == 13) {
+            _load( 0, resourceURL );
+        }
     });
 
     function _load( page, urlResourceName ) {

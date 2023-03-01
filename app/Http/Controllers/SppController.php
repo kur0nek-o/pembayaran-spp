@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Spp;
+use App\Models\Siswa;
 use Illuminate\Http\Request;
 
 class SppController extends Controller
@@ -30,8 +31,8 @@ class SppController extends Controller
 
             $data = $data->latest()->paginate(5);
             return view('dashboard.spp.table', [
-                'spp'   => $data,
-                'index' => $data->firstItem()
+                'spp'       => $data,
+                'index'     => $data->firstItem()
             ])->render();
         }
     }
@@ -114,6 +115,14 @@ class SppController extends Controller
 
     public function destroy(Spp $spp)
     {
+        $isActive = Siswa::where('spp_id', $spp->id_spp)->get();
+        if ($isActive->count()) {
+            return response()->json([
+                'status' => false,
+                'msg'    => "Data spp aktif dan sedang digunakan"
+            ]);
+        }
+            
         Spp::where('id_spp', $spp->id_spp)->delete();
         return response()->json([
             'status' => true,
