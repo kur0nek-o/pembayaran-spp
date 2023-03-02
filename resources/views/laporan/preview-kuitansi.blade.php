@@ -5,19 +5,19 @@
 <div name="msg_storage" data-message="{{ session()->get('successMessage') }}" ></div>
 
 <div class="pagetitle">
-    <h1>Preview Kwitansi</h1>
+    <h1>Preview Kuitansi</h1>
 
     <nav>
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="/dashboard">Beranda</a></li>
             <li class="breadcrumb-item">History & Pembayaran</li>
-            <li class="breadcrumb-item">Preview Kwitansi</li>
+            <li class="breadcrumb-item">Preview Kuitansi</li>
         </ol>
     </nav>
 </div><!-- End Page Title -->
 
 <a href="/pembayaran" class="btn btn-warning mb-3 btn-sm">Kembali</a>
-<a target="_blank" href="/cetak-kwitansi/{{ $pembayaran->id_pembayaran }}" class="btn btn-primary btn-sm mb-3"><i class="bi bi-printer me-2"></i>Cetak kwitansi</a>
+<a target="_blank" href="/cetak-kuitansi/{{ $pembayaran->id_pembayaran }}" class="btn btn-primary btn-sm mb-3"><i class="bi bi-printer me-2"></i>Cetak Kuitansi</a>
 
 <section class="section">
     <div class="row">
@@ -68,7 +68,6 @@
 </section>
 
 <script>
-    const resourceURL = 'loadPembayaran';
     const theMessage  = $( 'div[name="msg_storage"]' ).data( 'message' );
 
     $(document).ready(function() {

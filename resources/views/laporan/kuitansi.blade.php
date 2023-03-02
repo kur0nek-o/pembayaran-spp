@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Kwitansi</title>
+	<title>Kuitansi</title>
 
 	<style type="text/css">
 		body {
@@ -36,7 +36,7 @@
 	</style>
 </head>
 <body>
-	<h1>Kwitansi Pembayaran</h1>
+	<h1>Kuitansi Pembayaran</h1>
 
 	<main>
 		<hr>

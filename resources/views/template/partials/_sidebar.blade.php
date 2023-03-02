@@ -54,7 +54,7 @@
         </li>
         <li class="nav-item">
             <a class="nav-link {{ isset($active) && $active == 'history_pembayaran' ? '' : 'collapsed'  }}" href="/history">
-                <i class="bi bi-cash"></i>
+                <i class="bi bi-clock-history"></i>
                 <span>History Pembayaran</span>
             </a>
         </li>

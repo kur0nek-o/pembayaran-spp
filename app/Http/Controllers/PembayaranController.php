@@ -73,7 +73,7 @@ class PembayaranController extends Controller
         $data = Pembayaran::create($validated->except('pembayaran-spp')->toArray());
         
         History::create(['id_pembayaran' => $data->id]);
-        return redirect()->away('/preview-kwitansi/' . $data->id)->with( 'successMessage', 'Pembayaran berhasil dilakukan' );
+        return redirect()->away('/preview-kuitansi/' . $data->id)->with( 'successMessage', 'Pembayaran berhasil dilakukan' );
     }
 
     public function getBulan($tahunSPP, $id) {

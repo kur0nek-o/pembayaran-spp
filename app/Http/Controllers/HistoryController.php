@@ -8,20 +8,16 @@ use Barryvdh\DomPDF\Facade\Pdf;
 
 class HistoryController extends Controller
 {
-    public function previewKwitansi(Pembayaran $pembayaran) {
-        return view('laporan.preview-kwitansi', [
-            'title'         => 'Preview kwitansi',
-            'active'        => 'transaksi_pembayaran',
+    public function previewKuitansi(Pembayaran $pembayaran) {
+        return view('laporan.preview-kuitansi', [
+            'title'         => 'Preview Kuitansi',
+            'active'        => 'history_pembayaran',
             'pembayaran'    => $pembayaran
         ]);
     }
 
-    public function cetakKwitansi(Pembayaran $pembayaran) {
-        $pdf = Pdf::loadView('laporan.kwitansi', [
-            'title'         => 'kwitansi',
-            'active'        => 'transaksi_pembayaran',
-            'pembayaran'    => $pembayaran
-        ]);
+    public function cetakKuitansi(Pembayaran $pembayaran) {
+        $pdf = Pdf::loadView('laporan.kuitansi', ['pembayaran'    => $pembayaran]);
         return $pdf->stream();
     }
 }

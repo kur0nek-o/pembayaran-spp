@@ -55,7 +55,7 @@ Route::post('/loadPembayaran', [PembayaranController::class, '_load'])->middlewa
 Route::get('/transaksi-pembayaran/{siswa}', [PembayaranController::class, 'create'])->middleware('auth');
 Route::post('/transaksi-pembayaran', [PembayaranController::class, 'store'])->middleware('auth');
 
-Route::get('/cetak-kwitansi/{pembayaran:id_pembayaran}', [HistoryController::class, 'cetakKwitansi'])->middleware('auth');
-Route::get('/preview-kwitansi/{pembayaran:id_pembayaran}', [HistoryController::class, 'previewKwitansi'])->middleware('auth');
+Route::get('/cetak-kuitansi/{pembayaran:id_pembayaran}', [HistoryController::class, 'cetakKuitansi'])->middleware('auth');
+Route::get('/preview-kuitansi/{pembayaran:id_pembayaran}', [HistoryController::class, 'previewKuitansi'])->middleware('auth');
 
 Route::get('/history', [HistoryController::class, 'index'])->middleware('auth');
