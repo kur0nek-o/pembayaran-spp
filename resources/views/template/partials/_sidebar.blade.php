@@ -52,5 +52,11 @@
                 <span>Transaksi Pembayaran</span>
             </a>
         </li>
+        <li class="nav-item">
+            <a class="nav-link {{ isset($active) && $active == 'history_pembayaran' ? '' : 'collapsed'  }}" href="/history">
+                <i class="bi bi-cash"></i>
+                <span>History Pembayaran</span>
+            </a>
+        </li>
     </ul>
 </aside><!-- End Sidebar-->

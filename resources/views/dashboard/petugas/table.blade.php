@@ -19,7 +19,10 @@
                         <td>{{ ucfirst($list->level) }}</td>
                         <td>
                             <button class="btn btn-warning btn-sm" type="button" onclick="_edit( {{ $list->id_petugas }} )"><i class="bi bi-pencil-square"></i></button>
-                            <button class="btn btn-danger btn-sm" type="button" onclick="_delete( {{ $list->id_petugas }}, 'Kamu akan menghapus data petugas!', 'petugas' )"><i class="bi bi-x-circle"></i></button>
+
+                            @if($list->id_petugas != auth()->user()->petugas->id_petugas)
+                                <button class="btn btn-danger btn-sm" type="button" onclick="_delete( {{ $list->id_petugas }}, 'Kamu akan menghapus data petugas!', 'petugas' )"><i class="bi bi-x-circle"></i></button>
+                            @endif
                         </td>
                     </tr>
                 @endforeach

@@ -17,7 +17,10 @@
                         <td>{{ convert_to_rupiah($list->nominal) }}</td>
                         <td>
                             <button class="btn btn-warning btn-sm" type="button" onclick="_edit( {{ $list->id_spp }} )"><i class="bi bi-pencil-square"></i></button>
-                            <button class="btn btn-danger btn-sm" type="button" onclick="_delete( {{ $list->id_spp }}, 'Kamu akan menghapus data spp!', 'spp' )"><i class="bi bi-x-circle"></i></button>
+
+                            @if(! $list->siswa->count())
+                                <button class="btn btn-danger btn-sm" type="button" onclick="_delete( {{ $list->id_spp }}, 'Kamu akan menghapus data spp!', 'spp' )"><i class="bi bi-x-circle"></i></button>
+                            @endif
                         </td>
                     </tr>
                 @endforeach

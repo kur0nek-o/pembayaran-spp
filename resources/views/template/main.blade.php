@@ -27,7 +27,7 @@
     <link href="/vendor/DataTables/datatables.min.css" rel="stylesheet">
 
     <!--- Vendor JS File -->
-    <script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="/vendor/jquery/jquery-3.6.3.min.js"></script>
 
     <!-- Template Main CSS File -->
     <link href="/css/style.css" rel="stylesheet">
