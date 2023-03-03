@@ -12,7 +12,7 @@ class PetugasController extends Controller
     public function index()
     {
         $data = Petugas::_Join()->latest()->paginate(5);
-
+        
         return view( 'dashboard.petugas.index', [
             'title'     => 'Petugas',
             'active'    => 'petugas',
