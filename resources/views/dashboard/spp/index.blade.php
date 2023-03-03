@@ -38,7 +38,7 @@
 
 <!---------------- Main Section ---------------->
 <div class="pagetitle">
-    <h1>Kelas</h1>
+    <h1>SPP</h1>
 
     <nav>
         <ol class="breadcrumb">

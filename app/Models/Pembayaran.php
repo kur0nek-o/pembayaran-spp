@@ -9,6 +9,7 @@ class Pembayaran extends Model
 {
     use HasFactory;
     protected $guarded = ['id_pembayaran'];
+    protected $with    = ['siswa', 'petugas'];
 
     public function siswa() {
         return $this->belongsTo(Siswa::class, 'siswa_id', 'id');

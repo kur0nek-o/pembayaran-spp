@@ -9,7 +9,6 @@ class Spp extends Model
 {
     use HasFactory;
     protected $guarded = ['id_spp'];
-    protected $with    = ['siswa'];
     
     public function siswa() {
         return $this->hasMany(Siswa::class, 'spp_id', 'id_spp');

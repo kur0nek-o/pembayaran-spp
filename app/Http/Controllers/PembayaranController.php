@@ -53,6 +53,20 @@ class PembayaranController extends Controller
         ]);
     }
 
+    public function edit(Pembayaran $pembayaran) {
+        $siswa = $pembayaran->siswa;
+        $bulan = $this->getBulan($siswa->spp->tahun, $siswa->id, true);
+
+        return view('dashboard.entri_transaksi.edit', [
+            'title'  => 'History Pembayaran',
+            'active' => 'history_pembayaran',
+            'siswa'  => $siswa,
+            'bulan'  => $bulan,
+            'pembayaran' => $pembayaran,
+            'curr_bulan' => $pembayaran->bulan_dibayar . ' | ' . $pembayaran->tahun_dibayar
+        ]);
+    }
+
     public function store(Request $request) {
         $validated = $request->validate([
             'id_petugas'        => 'required',
@@ -76,8 +90,39 @@ class PembayaranController extends Controller
         return redirect()->away('/preview-kuitansi/' . $data->id)->with( 'successMessage', 'Pembayaran berhasil dilakukan' );
     }
 
-    public function getBulan($tahunSPP, $id) {
-        $activeBulan = Pembayaran::where('siswa_id', $id)->get();
+    public function update(Request $request, Pembayaran $pembayaran) {
+        $pembayaranSpp = explode(' | ', $request->post('pembayaran-spp'));
+        $bulan = $pembayaranSpp[0];
+        $tahun = $pembayaranSpp[1];
+
+        $isUniquePembayaran = Pembayaran::where('bulan_dibayar', $bulan)->where('tahun_dibayar', $tahun)->count();
+        if ($isUniquePembayaran) {
+            return redirect()->back()->withErrors(['pembayaran-spp' => 'Pembayaran ini sudah pernah dilakukan']);
+        }
+
+        $validated = $request->validate([
+            'id_petugas'        => 'required',
+            'siswa_id'          => 'required',
+            'tgl_bayar'         => 'required',
+            'pembayaran-spp'    => 'required',
+            'jumlah_bayar'      => 'required'
+        ], [
+            'pembayaran-spp.required' => 'Pembayaran SPP harus diisi'
+        ]);
+
+        $validated['bulan_dibayar'] = $bulan;
+        $validated['tahun_dibayar'] = $tahun;
+        $validated['jumlah_bayar']  = convert_to_int($validated['jumlah_bayar']);
+
+        $validated = collect($validated);
+        Pembayaran::where('id_pembayaran', $pembayaran->id_pembayaran)->update($validated->only([
+            'bulan_dibayar', 'tahun_dibayar'
+        ])->toArray());
+        return redirect('/history')->with( 'successMessage', 'Pembayaran berhasil dilakukan' );
+    }
+
+    public function getBulan($tahunSPP, $id, $bulanOnly = false) {
+        if (!$bulanOnly) { $activeBulan = Pembayaran::where('siswa_id', $id)->get(); }
         $bulanList   = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
 
         $tempBln = [];
@@ -87,6 +132,8 @@ class PembayaranController extends Controller
             }
             $tahunSPP++;
         }
+
+        if ($bulanOnly) { return $tempBln; }
 
         $activePembayaran = [];
         if ( $activeBulan->count() ) {
