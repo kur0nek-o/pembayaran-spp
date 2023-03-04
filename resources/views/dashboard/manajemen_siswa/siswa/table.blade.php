@@ -31,7 +31,7 @@
                 </tr>
             @endif
         </tbody>
-        <tr class="buffer">
+        <tr class="buffer d-none">
             <td colspan="6"><img width="50" src="/img/buffer.gif" alt="buffering"></td>
         </tr>
     </table>

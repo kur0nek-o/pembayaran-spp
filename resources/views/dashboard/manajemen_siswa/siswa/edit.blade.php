@@ -62,6 +62,7 @@
                                     placeholder="Masukan NISN"
                                     maxlength="10"
                                     value="{{ old('nisn', $siswa->nisn) }}"
+                                    onkeypress="return hanyaAngka(event)"
                                 />
                                 <label for="nisn">Masukan NISN</label>
 
@@ -85,6 +86,7 @@
                                     placeholder="Masukan NIS"
                                     maxlength="8"
                                     value="{{ old('nis', $siswa->nis) }}"
+                                    onkeypress="return hanyaAngka(event)"
                                 />
                                 <label for="nis">Masukan NIS</label>
 
@@ -164,6 +166,7 @@
                                     placeholder="Masukan nomor telpon siswa"
                                     maxlength="13"
                                     value="{{ old('no_telp', $siswa->no_telp) }}"
+                                    onkeypress="return hanyaAngka(event)"
                                 />
                                 <label for="nis">Nomor telpon siswa</label>
 
