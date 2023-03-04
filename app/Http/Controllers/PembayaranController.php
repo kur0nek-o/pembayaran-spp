@@ -12,12 +12,19 @@ class PembayaranController extends Controller
 {
     public function index() {
         $data = Siswa::_join(true)->latest()->paginate(5);
+        $isLunas = [];
+        foreach ($data as $item) {
+            if (Pembayaran::where('siswa_id', $item->id)->count() == 48) {
+                $isLunas[] = $item->id; 
+            }
+        }
 
         return view( 'dashboard.entri_transaksi.index', [
-            'title'  => 'Transaksi Pembayaran',
-            'active' => 'transaksi_pembayaran',
-            'siswa'  => $data,
-            'index'  => $data->firstItem()
+            'title'   => 'Transaksi Pembayaran',
+            'active'  => 'transaksi_pembayaran',
+            'siswa'   => $data,
+            'index'   => $data->firstItem(),
+            'isLunas' => $isLunas
         ]);
     }
 
@@ -35,9 +42,16 @@ class PembayaranController extends Controller
             }
 
             $data = $data->latest()->paginate(5);
+            $isLunas = [];
+            foreach ($data as $item) {
+                if (Pembayaran::where('siswa_id', $item->id)->count() == 48) {
+                    $isLunas[] = $item->id; 
+                }
+            }
             return view('dashboard.entri_transaksi.table', [
-                'siswa' => $data,
-                'index' => $data->firstItem()
+                'siswa'   => $data,
+                'index'   => $data->firstItem(),
+                'isLunas' => $isLunas
             ])->render();
         }
     }

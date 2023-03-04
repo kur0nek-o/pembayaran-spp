@@ -21,7 +21,18 @@
                         <td>{{ $list->nama }}</td>
                         <td>{{ $list->nama_kelas }}</td>
                         <td>{{ "Spp tahun $list->tahun | " . convert_to_rupiah($list->nominal) }}</td>
-                        <td><a class="btn btn-primary btn-sm" href="/transaksi-pembayaran/{{ $list->id }}" >Bayar</a></td>
+
+                        @if(! empty($isLunas) )
+                            @foreach( $isLunas as $item )
+                                @if( $list->id == $item )
+                                    <td><span class="badge bg-success"><i class="bi bi-check-circle me-1"></i> Lunas</span></td>
+                                @else
+                                    <td><a class="btn btn-primary btn-sm" href="/transaksi-pembayaran/{{ $list->id }}" >Bayar</a></td>
+                                @endif
+                            @endforeach
+                        @else
+                            <td><a class="btn btn-primary btn-sm" href="/transaksi-pembayaran/{{ $list->id }}" >Bayar</a></td>
+                        @endif
                     </tr>
                 @endforeach
             @else

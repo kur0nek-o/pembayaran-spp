@@ -29,6 +29,7 @@
                     <form action="/siswa/{{ $siswa->id }}" id="siswa-form" method="POST" class="row g-3" autocomplete="off">
                         @method('PUT')
                         @csrf
+                        <input type="hidden" name="spp_id" value="{{ $siswa->spp_id }}">
                         <div class="col-md-12">
                             <div class="form-floating">
                                 <input
@@ -130,31 +131,18 @@
                         </div>
                         <div class="col-md-4">
                             <div class="form-floating mb-2">
-                                <select
-                                    class="form-select @error('spp_id') is-invalid @enderror"
-                                    id="spp_id"
-                                    name="spp_id"
-                                >
-                                    <option value="">Pilih</option>
-
-                                    @foreach( $spp as $list )
-                                        @if( old('spp_id', $siswa->spp_id) == $list->id_spp )
-                                            <option value="{{ $list->id_spp }}" selected>{{ "Spp tahun $list->tahun | " . convert_to_rupiah($list->nominal) }}</option>
-                                        @else
-                                            <option value="{{ $list->id_spp }}">{{ "Spp tahun $list->tahun | " . convert_to_rupiah($list->nominal) }}</option>
-                                        @endif
-                                    @endforeach
-                                </select>
-                                <label for="spp_id">Pilih spp yang digunakan</label>
-                                
-                                @error('spp_id')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
-                                @enderror
+                                <div class="form-floating">
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="display_for_spp"
+                                        name="display_for_spp"
+                                        value="{{ 'Spp tahun ' . $siswa->spp->tahun . ' | ' . convert_to_rupiah($siswa->spp->nominal) }}"
+                                        readonly
+                                    />
+                                    <label for="display_for_spp">Pilih spp yang digunakan</label>
+                                </div>
                             </div>
-
-                            <button type="button" onclick="openModal('modal-spp', 'Tambah SPP', 'form-spp')" class="btn btn-secondary btn-sm">Tambah SPP</button>
                         </div>
                         <div class="col-md-5">
                             <div class="form-floating">
