@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Login · Pembayaran SPP</title>
+        <title>Log in · Pembayaran SPP</title>
         <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
         <!-- Custom styles -->
@@ -13,7 +13,7 @@
         <main class="form-signin w-100 m-auto">
             <form action="/" method="POST" autocomplete="off">
                 @csrf
-                <h1 class="h3 mb-3 fw-normal">Login</h1>
+                <h1 class="h3 mb-3 fw-normal">Log in</h1>
 
                 @if ( session()->has('invalidMessage') )
                     <div class="alert alert-danger" role="alert">
@@ -65,7 +65,7 @@
                     @enderror
                 </div>
 
-                <button class="w-100 btn btn-lg btn-primary" type="submit">Login</button>
+                <button class="w-100 btn btn-lg btn-primary" type="submit">Log in</button>
             </form>
         </main>
     </body>

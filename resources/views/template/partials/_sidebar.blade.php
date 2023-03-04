@@ -58,5 +58,14 @@
                 <span>History Pembayaran</span>
             </a>
         </li>
+
+        <li class="nav-heading">Log out</li>
+
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="/logout">
+                <i class="bi bi-box-arrow-right"></i>
+                <span>Keluar</span>
+            </a>
+        </li>
     </ul>
 </aside><!-- End Sidebar-->
