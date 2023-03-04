@@ -54,11 +54,11 @@ Route::get('/pembayaran', [PembayaranController::class, 'index'])->middleware('a
 Route::post('/loadPembayaran', [PembayaranController::class, '_load'])->middleware('auth');
 Route::get('/transaksi-pembayaran/{siswa}', [PembayaranController::class, 'create'])->middleware('auth');
 Route::post('/transaksi-pembayaran', [PembayaranController::class, 'store'])->middleware('auth');
-Route::get('/edit-history/{pembayaran:id_pembayaran}', [PembayaranController::class, 'edit'])->middleware('auth');
-Route::put('/edit-history/{pembayaran:id_pembayaran}', [PembayaranController::class, 'update'])->middleware('auth');
+Route::get('/edit-history/{pembayaran}', [PembayaranController::class, 'edit'])->middleware('auth');
+Route::put('/edit-history/{pembayaran}', [PembayaranController::class, 'update'])->middleware('auth');
 
 Route::get('/history', [HistoryController::class, 'index'])->middleware('auth');
 Route::get('/loadHistory', [HistoryController::class, '_load'])->middleware('auth');
-Route::get('/cetak-kuitansi/{pembayaran:id_pembayaran}', [HistoryController::class, 'cetakKuitansi'])->middleware('auth');
-Route::get('/preview-kuitansi/{pembayaran:id_pembayaran}', [HistoryController::class, 'previewKuitansi'])->middleware('auth');
+Route::get('/cetak-kuitansi/{pembayaran}', [HistoryController::class, 'cetakKuitansi'])->middleware('auth');
+Route::get('/preview-kuitansi/{pembayaran}', [HistoryController::class, 'previewKuitansi'])->middleware('auth');
 Route::delete('/delete-history/{history}', [HistoryController::class, 'delete'])->middleware('auth');

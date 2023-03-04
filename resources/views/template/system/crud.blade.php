@@ -114,6 +114,12 @@
             confirmButtonText   : 'Ya!'
         }).then((result) => {
             if ( result.isConfirmed ) {
+                Swal.fire({
+                    text: "Sedang memproses data",
+                    customClass: 'swal-wide'
+                });
+                Swal.showLoading();
+                
                 $.ajaxSetup({
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Siswa;
+use App\Models\Pembayaran;
+use App\Models\History;
 use App\Models\Kelas;
 use App\Models\Spp;
 use App\Models\User;
@@ -160,6 +162,18 @@ class SiswaController extends Controller
 
     public function destroy(Siswa $siswa)
     {
+        $pembayaran = Pembayaran::where('siswa_id', $siswa->id)->get();
+        if ($pembayaran->count()) {
+            foreach ($pembayaran as $item) {
+                $history = History::where('id_pembayaran', $item->id_pembayaran)->first();
+                if ($history != null) {
+                    $history->delete();
+                }
+
+                $item->delete();
+            }
+        }
+
         User::where('id', $siswa->user_id)->delete();
         $siswa->delete();
         return response()->json([

@@ -86,8 +86,8 @@ class PembayaranController extends Controller
         $validated = collect($validated);
         $data = Pembayaran::create($validated->except('pembayaran-spp')->toArray());
         
-        History::create(['id_pembayaran' => $data->id]);
-        return redirect()->away('/preview-kuitansi/' . $data->id)->with( 'successMessage', 'Pembayaran berhasil dilakukan' );
+        History::create(['id_pembayaran' => $data->id_pembayaran]);
+        return redirect()->away('/preview-kuitansi/' . $data->id_pembayaran)->with( 'successMessage', 'Pembayaran berhasil dilakukan' );
     }
 
     public function update(Request $request, Pembayaran $pembayaran) {

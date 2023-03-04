@@ -21,7 +21,7 @@
                         <td>{{ $list->nama_kelas }}</td>
                         <td>
                             <a class="btn btn-warning btn-sm" href="/siswa/{{ $list->id }}/edit"><i class="bi bi-pencil-square"></i></a>
-                            <button class="btn btn-danger btn-sm" type="button" onclick="_delete( {{ $list->id }}, 'Kamu akan menghapus data siswa!', 'siswa' )"><i class="bi bi-x-circle"></i></button>
+                            <button class="btn btn-danger btn-sm" type="button" onclick="_delete( {{ $list->id }}, 'Menghapus data siswa berarti menghapus semua record transaksi dan history siswa yang bersangkutan!', 'siswa' )"><i class="bi bi-x-circle"></i></button>
                         </td>
                     </tr>
                 @endforeach

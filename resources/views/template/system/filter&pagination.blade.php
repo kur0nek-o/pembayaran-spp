@@ -8,7 +8,6 @@
         });
     });
 
-    $( '.buffer' ).hide();
     setStyleToPaginations();
 
     $( '#search' ).on( 'keypress', function(e) {
@@ -19,7 +18,7 @@
 
     function _load( page, urlResourceName ) {
         $( '#table-body' ).hide();
-        $( '.buffer' ).show();
+        $( '.buffer' ).toggleClass('d-none');
         let keyword = $( '#search' ).val();
 
         $.ajaxSetup({
@@ -35,7 +34,6 @@
             success :function( data ) {
                 $('#table_data').html( data );
                 setStyleToPaginations();
-                $( '.buffer' ).hide();
                 $( '#table-body' ).show();
             },
             error: function( jqXHR, textStatus, errorThrown ) {
