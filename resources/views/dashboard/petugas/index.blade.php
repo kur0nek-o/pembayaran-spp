@@ -69,7 +69,10 @@
                     <div class="row">
                         <div class="col-sm-6"><button type="button" onclick="openModal( 'Tambah petugas' )" class="btn btn-sm btn-primary mb-3">Tambah Petugas</button></div>
                         <div class="col-sm-6 mb-sm-0 mb-3">
-                            <input autofocus type="search" name="keyword" class="form-control form-control-sm" id="search" placeholder="Cari petugas...">
+                            <div class="input-group input-group-sm">
+                                <input autofocus type="search" name="keyword" id="search" class="form-control" placeholder="Cari petugas...">
+                                <button type="button" class="input-group-text bg-info" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Ketikan keyword pada kolom pencarian lalu klik enter untuk mulai melakukan pencarian."><i class="bi bi-info-circle"></i></button>
+                            </div>
                         </div>
                     </div>
 

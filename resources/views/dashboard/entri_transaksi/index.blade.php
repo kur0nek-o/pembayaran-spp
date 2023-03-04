@@ -23,7 +23,10 @@
                 <div class="card-body p-0">
                     <div class="row mb-3">
                         <div class="col-sm-6 mb-sm-0">
-                            <input autofocus type="search" name="keyword" class="form-control form-control-sm" id="search" placeholder="Cari siswa...">
+                            <div class="input-group input-group-sm">
+                                <input autofocus type="search" name="keyword" id="search" class="form-control" placeholder="Cari siswa...">
+                                <button type="button" class="input-group-text bg-info" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Ketikan keyword pada kolom pencarian lalu klik enter untuk mulai melakukan pencarian."><i class="bi bi-info-circle"></i></button>
+                            </div>
                         </div>
                     </div>
 
