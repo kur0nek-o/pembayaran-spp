@@ -21,27 +21,25 @@
         <div class="col">
             <div class="card p-3">
                 <div class="card-body p-0">
-                    <div class="row mb-1">
+                    <div class="row mb-2">
                         <div class="col-sm-6 mb-sm-0">
                             <input autofocus type="search" name="keyword" class="form-control form-control-sm" id="search" placeholder="Cari history...">
                         </div>
                     </div>
 
-                    <div class="table-responsive">
-                        <table id="table_data" class="table table-bordered border-dark text-center">
-                            <thead style="background: yellow">
-                                <tr class="text-nowrap">
-                                    <th>No</th>
-                                    <th>Nama siswa</th>
-                                    <th>Kelas</th>
-                                    <th>Pembayaran SPP</th>
-                                    <th>Tanggal Bayar</th>
-                                    <th>Jumlah Bayar</th>
-                                    <th>Aksi</th>
-                                </tr>
-                            </thead>
-                        </table>
-                    </div>
+                    <table id="table_data" style="width:100%" class="table table-striped table-bordered nowrap">
+                        <thead style="background: yellow;">
+                            <tr>
+                                <th style="background: yellow;">No</th>
+                                <th>Nama siswa</th>
+                                <th>Kelas</th>
+                                <th>Pembayaran SPP</th>
+                                <th>Tanggal Bayar</th>
+                                <th>Jumlah Bayar</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                    </table>
                 </div>
             </div>
         </div>
@@ -64,6 +62,10 @@
             serverSide: false,
             lengthChange: false,
             ordering: false,
+            scrollY: "300px",
+            scrollX: true,
+            scrollCollapse: true,
+            fixedColumns: true,
             language: {
                 sProcessing:   "Sedang memproses...",
                 sLengthMenu:   "Tampilkan _MENU_ entri",

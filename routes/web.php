@@ -25,40 +25,52 @@ Route::get('/', function () {
     return view('index');
 })->name('login')->middleware('guest');
 
-Route::get('/logout', [LoginController::class, 'logout'])->middleware('auth');
-Route::post('/', [LoginController::class, '_validateRequest'])->middleware('guest');
+Route::controller(LoginController::class)->group(function () {
+    Route::get('/logout', 'logout')->middleware('auth');
+    Route::post('/', '_validateRequest')->middleware('guest');
+});
 
 /* ---------------- Application Route ---------------- */
-Route::get('/dashboard', function() {
-    return view('dashboard.index', [
-        'title'     => 'Dashboard',
-        'active'    => 'dashboard'
-    ]);
-})->middleware('auth');
+Route::middleware('auth')->group(function () {
+    Route::get('/dashboard', function() {
+        return view('dashboard.index', [
+            'title'     => 'Dashboard',
+            'active'    => 'dashboard'
+        ]);
+    });
 
-Route::resource('/petugas', PetugasController::class)->middleware('auth');
-Route::post('/loadPetugas', [PetugasController::class, '_load'])->middleware('auth');
+    Route::resource('/petugas', PetugasController::class);
+    Route::post('/loadPetugas', [PetugasController::class, '_load']);
 
-Route::resource('/kelas', KelasController::class)->middleware('auth')->middleware('auth');
-Route::post('/loadKelas', [KelasController::class, '_load'])->middleware('auth');
-Route::get('/getKelasList', [KelasController::class, '_getItems'])->middleware('auth');
+    Route::resource('/kelas', KelasController::class);
+    Route::controller(KelasController::class)->group(function() {
+        Route::post('/loadKelas', '_load');
+        Route::get('/getKelasList', '_getItems');
+    });
 
-Route::resource('/spp', SppController::class)->middleware('auth')->middleware('auth');
-Route::post('/loadSpp', [SppController::class, '_load'])->middleware('auth');
-Route::get('/getSppList', [SppController::class, '_getItems'])->middleware('auth');
+    Route::resource('/spp', SppController::class);
+    Route::controller(KelasController::class)->group(function() {
+        Route::post('/loadSpp', [SppController::class, '_load']);
+        Route::get('/getSppList', [SppController::class, '_getItems']);
+    });
 
-Route::resource('/siswa', SiswaController::class)->middleware('auth');
-Route::post('/loadSiswa', [SiswaController::class, '_load'])->middleware('auth');
+    Route::resource('/siswa', SiswaController::class);
+    Route::post('/loadSiswa', [SiswaController::class, '_load']);
 
-Route::get('/pembayaran', [PembayaranController::class, 'index'])->middleware('auth');
-Route::post('/loadPembayaran', [PembayaranController::class, '_load'])->middleware('auth');
-Route::get('/transaksi-pembayaran/{siswa}', [PembayaranController::class, 'create'])->middleware('auth');
-Route::post('/transaksi-pembayaran', [PembayaranController::class, 'store'])->middleware('auth');
-Route::get('/edit-history/{pembayaran}', [PembayaranController::class, 'edit'])->middleware('auth');
-Route::put('/edit-history/{pembayaran}', [PembayaranController::class, 'update'])->middleware('auth');
+    Route::controller(PembayaranController::class)->group(function() {
+        Route::get('/pembayaran',  'index');
+        Route::post('/loadPembayaran',  '_load');
+        Route::get('/transaksi-pembayaran/{siswa}',  'create');
+        Route::post('/transaksi-pembayaran',  'store');
+        Route::get('/edit-history/{pembayaran}',  'edit');
+        Route::put('/edit-history/{pembayaran}',  'update');
+    });
 
-Route::get('/history', [HistoryController::class, 'index'])->middleware('auth');
-Route::get('/loadHistory', [HistoryController::class, '_load'])->middleware('auth');
-Route::get('/cetak-kuitansi/{pembayaran}', [HistoryController::class, 'cetakKuitansi'])->middleware('auth');
-Route::get('/preview-kuitansi/{pembayaran}', [HistoryController::class, 'previewKuitansi'])->middleware('auth');
-Route::delete('/delete-history/{history}', [HistoryController::class, 'delete'])->middleware('auth');
+    Route::controller(HistoryController::class)->group(function() {
+        Route::get('/history', [HistoryController::class, 'index']);
+        Route::get('/loadHistory', [HistoryController::class, '_load']);
+        Route::get('/cetak-kuitansi/{pembayaran}', [HistoryController::class, 'cetakKuitansi']);
+        Route::get('/preview-kuitansi/{pembayaran}', [HistoryController::class, 'previewKuitansi']);
+        Route::delete('/delete-history/{history}', [HistoryController::class, 'delete']);
+    });
+});

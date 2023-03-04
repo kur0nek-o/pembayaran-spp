@@ -24,7 +24,8 @@
     <link href="/vendor/quill/quill.snow.css" rel="stylesheet">
     <link href="/vendor/quill/quill.bubble.css" rel="stylesheet">
     <link href="/vendor/remixicon/remixicon.css" rel="stylesheet">
-    <link href="/vendor/DataTables/datatables.min.css" rel="stylesheet">
+    <link href="/vendor/DataTables/fix/dataTables.bootstrap5.min.css" rel="stylesheet">
+    <link href="/vendor/DataTables/fix/fixedColumns.bootstrap5.min.css" rel="stylesheet">
 
     <!--- Vendor JS File -->
     <script type="text/javascript" src="/vendor/jquery/jquery-3.6.3.min.js"></script>
@@ -47,7 +48,9 @@
     <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
     <!-- Vendor JS Files -->
-    <script src="/vendor/DataTables/datatables.min.js"></script>
+    <script src="/vendor/DataTables/fix/jquery.dataTables.min.js"></script>
+    <script src="/vendor/DataTables/fix/dataTables.bootstrap5.min.js"></script>
+    <script src="/vendor/DataTables/fix/dataTables.fixedColumns.min.js"></script>
     <script src="/js/sweetalert2.all.min.js"></script>
     <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="/vendor/apexcharts/apexcharts.min.js"></script>
