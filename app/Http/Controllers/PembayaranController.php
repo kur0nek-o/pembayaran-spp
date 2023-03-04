@@ -100,7 +100,10 @@ class PembayaranController extends Controller
         $validated = collect($validated);
         $data = Pembayaran::create($validated->except('pembayaran-spp')->toArray());
         
-        History::create(['id_pembayaran' => $data->id_pembayaran]);
+        History::create([
+            'id_pembayaran' => $data->id_pembayaran,
+            'siswa_id'      => $request->siswa_id
+        ]);
         return redirect()->away('/preview-kuitansi/' . $data->id_pembayaran)->with( 'successMessage', 'Pembayaran berhasil dilakukan' );
     }
 
@@ -109,7 +112,7 @@ class PembayaranController extends Controller
         $bulan = $pembayaranSpp[0];
         $tahun = $pembayaranSpp[1];
 
-        $isUniquePembayaran = Pembayaran::where('bulan_dibayar', $bulan)->where('tahun_dibayar', $tahun)->count();
+        $isUniquePembayaran = Pembayaran::where('bulan_dibayar', $bulan)->where('tahun_dibayar', $tahun)->where('siswa_id', $request->siswa_id)->count();
         if ($isUniquePembayaran) {
             return redirect()->back()->withErrors(['pembayaran-spp' => 'Pembayaran ini sudah pernah dilakukan']);
         }
@@ -132,7 +135,7 @@ class PembayaranController extends Controller
         Pembayaran::where('id_pembayaran', $pembayaran->id_pembayaran)->update($validated->only([
             'bulan_dibayar', 'tahun_dibayar'
         ])->toArray());
-        return redirect('/history')->with( 'successMessage', 'Pembayaran berhasil dilakukan' );
+        return redirect('/history')->with( 'successMessage', 'Data pembayaran berhasil diperbaharui' );
     }
 
     public function getBulan($tahunSPP, $id, $bulanOnly = false) {

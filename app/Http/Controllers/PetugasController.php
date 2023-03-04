@@ -127,10 +127,15 @@ class PetugasController extends Controller
 
     public function destroy(Petugas $petuga)
     {
-        $id_petugas = $petuga->id_petugas;
+        if (User::where('level', 'admin')->count() == 1) {
+            return response()->json([
+                'status' => false,
+                'msg'    => 'Ini merupakan data admin terakhir'
+            ]);
+        }
 
         User::where( 'id', $petuga->user->id )->delete();
-        Petugas::where( 'id_petugas', $id_petugas )->delete();
+        Petugas::where( 'id_petugas', $petuga->id_petugas )->delete();
 
         return response()->json([
             'status' => true,

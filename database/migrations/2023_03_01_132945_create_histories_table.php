@@ -16,6 +16,7 @@ class CreateHistoriesTable extends Migration
         Schema::create('histories', function (Blueprint $table) {
             $table->id();
             $table->foreignId('id_pembayaran');
+            $table->foreignId('siswa_id');
             $table->timestamps();
         });
     }

@@ -8,6 +8,8 @@ use App\Http\Controllers\SiswaController;
 use App\Http\Controllers\PetugasController;
 use App\Http\Controllers\PembayaranController;
 use App\Http\Controllers\HistoryController;
+use App\Http\Controllers\SiswaHistoryController;
+use App\Http\Controllers\DashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,46 +33,52 @@ Route::controller(LoginController::class)->group(function () {
 });
 
 /* ---------------- Application Route ---------------- */
-Route::middleware('auth')->group(function () {
-    Route::get('/dashboard', function() {
-        return view('dashboard.index', [
-            'title'     => 'Dashboard',
-            'active'    => 'dashboard'
-        ]);
+Route::middleware(['auth', 'prevent_back_after_logout'])->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'index']);
+
+    Route::middleware('must_admin')->group(function () {
+        Route::resource('/petugas', PetugasController::class);
+        Route::post('/loadPetugas', [PetugasController::class, '_load']);
+
+        Route::resource('/kelas', KelasController::class);
+        Route::controller(KelasController::class)->group(function() {
+            Route::post('/loadKelas', '_load');
+            Route::get('/getKelasList', '_getItems');
+        });
+
+        Route::resource('/spp', SppController::class);
+        Route::controller(KelasController::class)->group(function() {
+            Route::post('/loadSpp', [SppController::class, '_load']);
+            Route::get('/getSppList', [SppController::class, '_getItems']);
+        });
+
+        Route::resource('/siswa', SiswaController::class);
+        Route::post('/loadSiswa', [SiswaController::class, '_load']);
     });
 
-    Route::resource('/petugas', PetugasController::class);
-    Route::post('/loadPetugas', [PetugasController::class, '_load']);
+    Route::middleware('admin_or_petugas')->group(function () {
+        Route::controller(PembayaranController::class)->group(function() {
+            Route::get('/pembayaran',  'index');
+            Route::post('/loadPembayaran',  '_load');
+            Route::get('/transaksi-pembayaran/{siswa}',  'create');
+            Route::post('/transaksi-pembayaran',  'store');
+            Route::get('/edit-history/{pembayaran}',  'edit');
+            Route::put('/edit-history/{pembayaran}',  'update');
+        });
 
-    Route::resource('/kelas', KelasController::class);
-    Route::controller(KelasController::class)->group(function() {
-        Route::post('/loadKelas', '_load');
-        Route::get('/getKelasList', '_getItems');
+        Route::controller(HistoryController::class)->group(function() {
+            Route::get('/history', [HistoryController::class, 'index']);
+            Route::get('/loadHistory', [HistoryController::class, '_load']);
+            Route::get('/cetak-kuitansi/{pembayaran}', [HistoryController::class, 'cetakKuitansi']);
+            Route::get('/preview-kuitansi/{pembayaran}', [HistoryController::class, 'previewKuitansi']);
+            Route::delete('/delete-history/{history}', [HistoryController::class, 'delete']);
+        });
     });
 
-    Route::resource('/spp', SppController::class);
-    Route::controller(KelasController::class)->group(function() {
-        Route::post('/loadSpp', [SppController::class, '_load']);
-        Route::get('/getSppList', [SppController::class, '_getItems']);
-    });
-
-    Route::resource('/siswa', SiswaController::class);
-    Route::post('/loadSiswa', [SiswaController::class, '_load']);
-
-    Route::controller(PembayaranController::class)->group(function() {
-        Route::get('/pembayaran',  'index');
-        Route::post('/loadPembayaran',  '_load');
-        Route::get('/transaksi-pembayaran/{siswa}',  'create');
-        Route::post('/transaksi-pembayaran',  'store');
-        Route::get('/edit-history/{pembayaran}',  'edit');
-        Route::put('/edit-history/{pembayaran}',  'update');
-    });
-
-    Route::controller(HistoryController::class)->group(function() {
-        Route::get('/history', [HistoryController::class, 'index']);
-        Route::get('/loadHistory', [HistoryController::class, '_load']);
-        Route::get('/cetak-kuitansi/{pembayaran}', [HistoryController::class, 'cetakKuitansi']);
-        Route::get('/preview-kuitansi/{pembayaran}', [HistoryController::class, 'previewKuitansi']);
-        Route::delete('/delete-history/{history}', [HistoryController::class, 'delete']);
+    Route::middleware('must_siswa')->group(function () {
+        Route::controller(SiswaHistoryController::class)->group(function() {
+            Route::get('/siswa-history', 'index');
+            Route::get('/loadSiswaHistory', '_load');
+        });
     });
 });

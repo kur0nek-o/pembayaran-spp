@@ -22,7 +22,11 @@ class LoginController extends Controller {
 
         if ( Auth::attempt($credentials) ) {
             $request->session()->regenerate();
-            return redirect()->intended('/dashboard');
+
+            if (auth()->user()->level != 'siswa') {
+                return redirect()->intended('/dashboard');
+            }
+            return redirect()->intended('/siswa-history');
         }
 
         return back()->with( 'invalidMessage', 'Gagal login periksa username dan password' )->onlyInput( 'username' );

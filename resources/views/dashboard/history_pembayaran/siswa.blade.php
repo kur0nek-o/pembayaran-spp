@@ -36,7 +36,6 @@
                                 <th>Pembayaran SPP</th>
                                 <th>Tanggal Bayar</th>
                                 <th>Jumlah Bayar</th>
-                                <th>Aksi</th>
                             </tr>
                         </thead>
                     </table>
@@ -51,10 +50,6 @@
     let table;
 
     $(document).ready(function() {
-        if ( theMessage ) {
-            Swal.fire('', `${theMessage}`, 'success');
-        }  
-
         table = $('#table_data').DataTable({
             responsive: true,
             processing: true,
@@ -83,7 +78,7 @@
                 }
             },
             ajax: {
-                url: '/loadHistory',
+                url: '/loadSiswaHistory',
                 method: 'GET'
             },
             info: false
@@ -93,46 +88,5 @@
             table.search(this.value).draw();
         });
     });
-
-    function reloadTable() {
-        table.ajax.reload();
-    }
-
-    function _delete( id ) {
-        Swal.fire({
-            title   : 'Apa kamu yakin?',
-            text    : 'Kamu akan menghapus data history!',
-            icon    : 'warning',
-            showCancelButton    : true,
-            confirmButtonColor  : '#3085d6',
-            cancelButtonColor   : '#d33',
-            cancelButtonText    : 'Batal',
-            confirmButtonText   : 'Ya!'
-        }).then((result) => {
-            if ( result.isConfirmed ) {
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    }
-                });
-                
-                $.ajax({
-                    url     : `/delete-history/${id}`,
-                    method  : 'DELETE',
-                    success : function( data ) {
-                        switch( data.status ) {
-                            case true:
-                                Swal.fire( '', `${data.msg}`, 'success' );
-                                break;
-                            case false:
-                                Swal.fire( '', `${data.msg}`, 'error' );
-                                break;
-                        }
-                        reloadTable();
-                    }
-                });
-            }
-        })
-    }
 </script>
 @endsection
