@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Siswa;
+use App\Models\Kelas;
+use App\Models\Petugas;
 
 class DashboardController extends Controller
 {
@@ -13,7 +16,10 @@ class DashboardController extends Controller
 
         return view('dashboard.index', [
             'title'     => 'Dashboard',
-            'active'    => 'dashboard'
+            'active'    => 'dashboard',
+            'siswa'     => Siswa::all()->count(),
+            'kelas'     => Kelas::all()->count(),
+            'petugas'   => Petugas::all()->count()
         ]);
     }
 }
